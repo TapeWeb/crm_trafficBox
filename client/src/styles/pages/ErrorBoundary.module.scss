@@ -1,0 +1,22 @@
+.ErrorStructure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #121212;
+  .ErrorBox {
+    padding: 1rem 1rem;
+    background: #303030;
+    text-align: center;
+    p {
+      margin: 2vh;
+      max-width: 30vh;
+      color: #fff;
+      font-weight: 550;
+    }
+    button {
+      margin: 2vh;
+    }
+  }
+}

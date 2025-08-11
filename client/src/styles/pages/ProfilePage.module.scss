@@ -1,0 +1,40 @@
+.myProfileStructure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  .profileBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    background: #303030;
+    border-radius: 1rem;
+    gap: 1rem;
+    .dataBox {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 2rem;
+      background: #404040;
+      margin-top: 1rem;
+      border-radius: 1rem;
+      h6 {
+        color: #fff;
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+      }
+    }
+    .buttonsBox {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+}

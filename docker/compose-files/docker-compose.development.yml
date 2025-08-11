@@ -1,0 +1,75 @@
+
+
+services:
+  app_mysql:
+    image: mysql:5.6.51
+    container_name: app_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${MYSQL_PORT}:${MYSQL_PORT}"
+    volumes:
+      - ../volumes/mysql_data:/var/lib/mysql
+      - ../sql-files/init.sql:/docker-entrypoint-initdb.d/init.sql:rw
+    networks:
+      - app_network
+
+  app_phpmyadmin:
+    image: phpmyadmin
+    container_name: app_phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - app_mysql
+    environment:
+      PMA_HOST: ${MYSQL_HOST}
+      PMA_PORT: ${MYSQL_PORT}
+    ports:
+      - "${PMA_EXTERNAL_PORT}:${PMA_INTERNAL_PORT}"
+    networks:
+      - app_network
+
+  app_server:
+    build:
+      context: ../../server
+      dockerfile: ../docker/dockerfiles/Dockerfile-server-${DOCKER_MODE}
+    container_name: app_server
+    restart: unless-stopped
+    volumes:
+      - ../../server:/server
+      - /server/node_modules
+    environment:
+      SERVER_PORT: ${SERVER_PORT}
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    networks:
+      - app_network
+    depends_on:
+      - app_mysql
+    env_file:
+      - ../../.env
+  app_client:
+    build:
+      context: ../../client
+      dockerfile: ../docker/dockerfiles/Dockerfile-client-${DOCKER_MODE}
+    container_name: app_client
+    restart: unless-stopped
+    volumes:
+      - ../../client:/client
+      - /client/node_modules
+    environment:
+      CLIENT_PORT: ${CLIENT_PORT}
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    env_file:
+      - ../../.env
+
+volumes:
+  mysql_data:
+
+networks:
+  app_network:
+    external: true

@@ -1,0 +1,17 @@
+FROM node:20-slim
+
+WORKDIR /server
+
+COPY package*.json ./
+
+ENV DOCKER_MODE=development
+
+RUN npm ci
+
+RUN npm list typescript || echo "TypeScript not installed"
+
+COPY . .
+
+EXPOSE 3000
+
+CMD sleep 30 && npm run dev

@@ -1,0 +1,25 @@
+.MyOffersStructure {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  .MyOffersBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background: #303030;
+    gap: 1rem;
+    .productBox {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      background: #404040;
+      color: white;
+      text-align: center;
+
+    }
+  }
+}
