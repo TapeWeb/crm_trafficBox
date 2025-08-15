@@ -1,7 +1,7 @@
-import {type ChangeEvent, Fragment, useEffect, useState} from "react";
+import { type ChangeEvent, Fragment, useEffect, useState } from "react";
 import styles from "../styles/pages/SignUpPage.module.scss";
 import { Button } from "../components/UI/Button.tsx";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function SignUpPage() {
   const [name, setName] = useState("");
@@ -19,32 +19,36 @@ export function SignUpPage() {
   }, []);
 
   const sendQuery = async () => {
-    if (!name || !surname || !age || !password || !email) {
-      alert("Please fill in all fields");
-      return;
-    }
 
     try {
       const res = await fetch("http://localhost:3000/create-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, surname, age: Number(age), password, selectedGender, email }),
+        body: JSON.stringify({
+          name,
+          surname,
+          age: Number(age),
+          password,
+          gender: selectedGender,
+          email
+        }),
       });
 
+      const text = await res.text();
+
       if (!res.ok) {
-        const errorText = await res.text();
-        alert("Server error: " + errorText);
-        console.error("Server error:", errorText);
+        alert("Server error: " + text);
+        console.error("Server error:", text);
         return;
       }
 
-      const result = await res.json();
+      const result = JSON.parse(text);
       localStorage.setItem("uToken", result.token);
-      console.log(uToken);
+      console.log("Token saved:", result.token);
       navigate("/");
     } catch (error) {
       console.error("Error when trying to send query:", error);
-      alert("Error when trying to send email");
+      alert("Error: " + (error instanceof Error ? error.message : String(error)));
     }
   };
 
@@ -102,9 +106,9 @@ export function SignUpPage() {
             <label>
               Your sex
               <select value={selectedGender} onChange={handleChange}>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="dontTalkAboutGender">Don't talk about gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="DontTalkAboutGender">Don't talk about gender</option>
               </select>
             </label>
           </div>

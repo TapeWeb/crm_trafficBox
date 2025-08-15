@@ -1,0 +1,16 @@
+.infoBarSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  padding: 3vh;
+  .mainDevelopersBox {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 3vh 1vw;
+    border-radius: 0.5rem;
+    background: #303030;
+    gap: 1rem;
+  }
+}

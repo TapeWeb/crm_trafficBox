@@ -75,14 +75,7 @@ export function ProfilePage() {
                 Your age: <p>{uAge}</p>
               </h6>
               <h6>
-                Your gender: <p>
-                {uAge
-                  ? "Male"
-                  : uAge === ""
-                    ? "Female"
-                    : "Don't talk about gender."}
-              </p>
-
+                Your gender: <p>{uGender}</p>
               </h6>
             </div>
             <div className={styles.buttonsBox}>

@@ -2,9 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "dev": "nodemon dist/server.ts"
+    "dev": "nodemon src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,10 +18,10 @@
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "mysql": "^2.18.1",
+    "mysql2": "^3.14.3",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2",
-    "uuid": "^11.1.0"
+    "typescript": "^5.9.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",

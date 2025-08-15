@@ -41,7 +41,7 @@ export function MyOffersPage() {
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   const sendQuery = async () => {
     if (!Id) {

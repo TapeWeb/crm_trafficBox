@@ -14,4 +14,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD sleep 30 && npm run dev
+CMD sleep 60 && npm run dev
