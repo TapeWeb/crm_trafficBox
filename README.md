@@ -66,7 +66,7 @@ After registering and logging in, users can:
 
 - `/client` — frontend built with React and TypeScript
 - `/server` — backend with Node.js and Express
-- `/config` — database and environment configurations
-- `/routes` — API routes
-- `/services` — application business logic
-- `/middlewares` — request middleware handlers
+- `/server/src/config` — database and environment configurations
+- `/server/src/routes` — API routes
+- `/server/src/services` — application business logic
+- `/server/src/middlewares` — request middleware handlers
