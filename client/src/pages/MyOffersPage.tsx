@@ -1,7 +1,6 @@
-import {Fragment, useEffect, useState} from "react";
-import styles from "../styles/pages/MyOffersPage.module.scss"
-import {Button} from "../components/UI/Button.tsx";
-
+import { Fragment, useEffect, useState } from "react";
+import styles from "../styles/pages/MyOffersPage.module.scss";
+import { Button } from "../components/UI/Button.tsx";
 
 interface Offer {
   oID: number;
@@ -9,17 +8,15 @@ interface Offer {
   oName: string;
   oDescribe: string;
   oPrice: number;
-  oValues: string;
+  oValues: number;
 }
 
-
 export function MyOffersPage() {
-  const [Id, setId] = useState("");
-  const [uToken, setUToken] = useState("");
+  const [uToken, setUToken] = useState<string | null>(null);
+  const [uID, setUID] = useState<number | null>(null);
   const [offers, setOffers] = useState<Offer[]>([]);
 
-
-  const getData = async(token: string) => {
+  const getUserData = async (token: string) => {
     try {
       const res = await fetch("http://localhost:3000/get-user", {
         method: "POST",
@@ -27,7 +24,6 @@ export function MyOffersPage() {
         body: JSON.stringify({ uToken: token }),
       });
 
-
       if (!res.ok) {
         const errorText = await res.text();
         alert(errorText);
@@ -35,26 +31,20 @@ export function MyOffersPage() {
       }
 
       const result = await res.json();
-      console.log(result);
-
-      setId(result.id);
+      console.log("Fetched user data:", result);
+      setUID(result.uID);
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching user:", err);
     }
   };
 
-  const sendQuery = async () => {
-    if (!Id) {
-      return;
-    }
-
+  const fetchMyOffers = async (userId: number) => {
     try {
       const res = await fetch("http://localhost:3000/check-my-offers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: Id }),
+        body: JSON.stringify({ id: userId }),
       });
-
 
       if (!res.ok) {
         const errorText = await res.text();
@@ -63,9 +53,10 @@ export function MyOffersPage() {
       }
 
       const result = await res.json();
-      setOffers(result.offers);
+      setOffers(Array.isArray(result) ? result : []);
+      console.log("Fetched offers:", result);
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching offers:", err);
     }
   };
 
@@ -78,6 +69,8 @@ export function MyOffersPage() {
       });
 
       if (!res.ok) {
+        const errorText = await res.text();
+        alert(errorText);
         return;
       }
 
@@ -87,40 +80,41 @@ export function MyOffersPage() {
     }
   };
 
-
   useEffect(() => {
     const token = localStorage.getItem("uToken");
     if (!token) return;
 
     setUToken(token);
-    getData(token).catch(err => console.error("Error loading user:", err));
+    getUserData(token).catch(console.error);
   }, []);
 
   useEffect(() => {
-    if (Id) {
-      sendQuery().catch(err => console.error("Error loading offers:", err));
+    if (uID !== null) {
+      fetchMyOffers(uID).catch(console.error);
     }
-  }, [Id]);
-
-
+  }, [uID]);
 
   return (
     <Fragment>
       <title>TrafficBox - My Offers</title>
       <section className={styles.MyOffersStructure}>
         <div className={styles.MyOffersBox}>
-          {offers.map((offer) => (
-            <div key={offer.oID} className={styles.productBox}>
-              <h1>Name: {offer.oName}</h1>
-              <p>Describe: {offer.oDescribe}</p>
-              <p>Price: {offer.oPrice}$</p>
-              <p>Values: {offer.oValues}</p>
-              <Button content={"Delete"} onClick={() => deleteOffer(offer.oID)}/>
-            </div>
-          ))}
-          <Button content={"Return"} link={"/"}/>
+          {offers.length === 0 ? (
+            <h1>No offers found.</h1>
+          ) : (
+            offers.map((offer) => (
+              <div key={offer.oID} className={styles.productBox}>
+                <h1>Name: {offer.oName}</h1>
+                <p>Describe: {offer.oDescribe}</p>
+                <p>Price: {offer.oPrice}$</p>
+                <p>Values: {offer.oValues}</p>
+                <Button content={"Delete"} onClick={() => deleteOffer(offer.oID)} />
+              </div>
+            ))
+          )}
+          <Button content={"Return"} link={"/"} />
         </div>
       </section>
     </Fragment>
-  )
+  );
 }

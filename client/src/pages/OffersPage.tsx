@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import styles from "../styles/pages/OffersPage.module.scss";
-import {Button} from "../components/UI/Button.tsx";
+import { Button } from "../components/UI/Button.tsx";
 
 interface Offer {
   oID: number;
@@ -8,7 +8,7 @@ interface Offer {
   oName: string;
   oDescribe: string;
   oPrice: number;
-  oValues: string;
+  oValues: number;
 }
 
 export function OffersPage() {
@@ -22,19 +22,18 @@ export function OffersPage() {
     try {
       const res = await fetch("http://localhost:3000/check-offers", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
       });
 
       if (!res.ok) {
+        const errorText = await res.text();
+        console.error("Server error:", errorText);
         return;
       }
-
       const result = await res.json();
-      setOffers(result.offers);
+      setOffers(Array.isArray(result) ? result : []);
     } catch (err) {
-      console.error(err);
+      console.error("Fetch error:", err);
     }
   };
 
@@ -43,20 +42,26 @@ export function OffersPage() {
       <title>TrafficBox - Offers</title>
       <section className={styles.OffersStructure}>
         <div className={styles.offerBox}>
-          {offers.map((offer) => (
-            <div key={offer.oID} className={styles.productBox}>
-              <h1>Name: {offer.oName}</h1>
-              <p>Describe: {offer.oDescribe}</p>
-              <p>Price: {offer.oPrice}$</p>
-              <p>Values: {offer.oValues}</p>
-              <Button content={"Quick buy"} onClick={() => {
-                alert("Buy is not available!");
-              }}/>
-            </div>
-          ))}
+          {offers.length > 0 ? (
+            offers.map((offer) => (
+              <div key={offer.oID} className={styles.productBox}>
+                <h1>Name: {offer.oName}</h1>
+                <p>Describe: {offer.oDescribe}</p>
+                <p>Price: {offer.oPrice}$</p>
+                <p>Values: {offer.oValues}</p>
+                <Button
+                  content={"Quick buy"}
+                  onClick={() => alert("Buy is not available!")}
+                />
+              </div>
+            ))
+          ) : (
+            <p>No offers available.</p>
+          )}
+
           <div className={styles.buttonsBox}>
-            <Button content={"Create offer!"} link={"/createOffer"}/>
-            <Button content={"Return"} link={"/"}/>
+            <Button content={"Create offer!"} link={"/createOffer"} />
+            <Button content={"Return"} link={"/"} />
           </div>
         </div>
       </section>

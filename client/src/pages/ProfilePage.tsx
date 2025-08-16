@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import styles from "../styles/pages/ProfilePage.module.scss";
-import {Button} from "../components/UI/Button.tsx";
-import {useNavigate} from "react-router-dom";
+import { Button } from "../components/UI/Button.tsx";
+import { useNavigate } from "react-router-dom";
 
 export function ProfilePage() {
   const [uToken, setUToken] = useState("");
@@ -13,14 +13,13 @@ export function ProfilePage() {
 
   const navigate = useNavigate();
 
-  const sendQuery = async (token: string) => {
+  const fetchUserData = async (token: string) => {
     try {
       const res = await fetch("http://localhost:3000/get-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ uToken: token }),
       });
-
 
       if (!res.ok) {
         const errorText = await res.text();
@@ -29,31 +28,28 @@ export function ProfilePage() {
       }
 
       const result = await res.json();
-      console.log(result);
+      console.log("Fetched user data:", result);
 
       setUName(result.name);
       setUSurname(result.surname);
       setUEmail(result.email);
       setUAge(result.age ? String(result.age) : "");
       setUGender(result.gender);
-      console.log("Successfully logged in!");
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching user data:", err);
     }
   };
 
-  const logOutFromAccount = () => {
+  const logOut = () => {
     localStorage.removeItem("uToken");
     navigate("/");
-  }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("uToken");
     if (token) {
       setUToken(token);
-      sendQuery(token).then(() => {
-        console.log("Data fetched!");
-      });
+      fetchUserData(token);
     }
   }, []);
 
@@ -79,15 +75,14 @@ export function ProfilePage() {
               </h6>
             </div>
             <div className={styles.buttonsBox}>
-              <Button content={"Logout"} onClick={logOutFromAccount}/>
-              <Button content={"Return"} link={"/"}/>
+              <Button content={"Logout"} onClick={logOut} />
+              <Button content={"Return"} link={"/"} />
             </div>
-            <Button content={"Offers"} link={"/offers"}/>
-            <Button content={"Your offers"} link={"/myOffers"}/>
+            <Button content={"Offers"} link={"/offers"} />
+            <Button content={"Your offers"} link={"/myOffers"} />
           </div>
         ) : (
           <h1>This page is unknown. Please authorize.</h1>
-
         )}
       </section>
     </Fragment>

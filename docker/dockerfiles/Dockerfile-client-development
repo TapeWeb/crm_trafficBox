@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 7777
 
-CMD ["sh", "-c", "sleep 60 && npm run dev -- --host"]
+CMD ["sh", "-c", "sleep 15 && npm run dev -- --host"]

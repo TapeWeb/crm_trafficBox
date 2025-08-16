@@ -18,7 +18,12 @@ export function SignUpPage() {
     if (token) setUToken(token);
   }, []);
 
-  const sendQuery = async () => {
+
+  const handleSignUp = async () => {
+    if (!name || !surname || !email || !password || !age) {
+      alert("Please fill in all fields");
+      return;
+    }
 
     try {
       const res = await fetch("http://localhost:3000/create-user", {
@@ -27,30 +32,24 @@ export function SignUpPage() {
         body: JSON.stringify({
           name,
           surname,
-          age: Number(age),
+          email,
           password,
+          age: Number(age),
           gender: selectedGender,
-          email
         }),
       });
 
-      const text = await res.text();
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Sign up failed");
 
-      if (!res.ok) {
-        alert("Server error: " + text);
-        console.error("Server error:", text);
-        return;
-      }
-
-      const result = JSON.parse(text);
-      localStorage.setItem("uToken", result.token);
-      console.log("Token saved:", result.token);
+      localStorage.setItem("uToken", data.token);
+      alert("Sign up successful!");
       navigate("/");
-    } catch (error) {
-      console.error("Error when trying to send query:", error);
-      alert("Error: " + (error instanceof Error ? error.message : String(error)));
+    } catch (err: any) {
+      alert("Error: " + err.message);
     }
   };
+
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedGender(event.target.value);
@@ -112,7 +111,7 @@ export function SignUpPage() {
               </select>
             </label>
           </div>
-          <Button content={"Sign Up"} onClick={sendQuery} />
+          <Button content={"Sign Up"} onClick={handleSignUp} />
           <div className={styles.authorizationBox}>
             <h5>You have Account?</h5>
             <Button content={"Sign In"} link={"/signIn"} />

@@ -24,23 +24,22 @@ export function SignInPage() {
       const res = await fetch("http://localhost:3000/check-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({email, password}),
+        body: JSON.stringify({ email, password }),
       });
 
       if (!res.ok) {
         const errorText = await res.text();
-        alert("Server error: " + errorText);
         console.error("Server error:", errorText);
+        alert("Server error: " + errorText);
         return;
       }
 
       const result = await res.json();
       localStorage.setItem("uToken", result.token);
-      console.log(uToken);
       navigate("/");
-    } catch (error) {
-      console.error("Error when trying to send query:", error);
-      alert("Error when trying to send email");
+    } catch (err) {
+      console.error("Fetch error:", err);
+      alert("Failed to sign in");
     }
   };
 

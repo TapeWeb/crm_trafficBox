@@ -2,16 +2,15 @@ FROM node:20-slim
 
 WORKDIR /server
 
+RUN apt-get update && apt-get install -y openssl
+
 COPY package*.json ./
-
-ENV DOCKER_MODE=development
-
-RUN npm ci
-
-RUN npm list typescript || echo "TypeScript not installed"
+RUN npm install
 
 COPY . .
 
+RUN npx prisma generate --schema=./prisma/prisma.schema
+
 EXPOSE 3000
 
-CMD sleep 60 && npm run dev
+CMD ["sh", "-c", "sleep 30 && npm run dev"]
