@@ -23,7 +23,7 @@ export const checkUser = async (req: Request, res: Response) => {
 
 export const getUser = async (req: Request, res: Response) => {
   try {
-    const { token } = req.body; // можно передавать в headers.authorization
+    const { token } = req.body;
     const user = await userService.getUser(token);
     res.json(user);
   } catch (err: any) {

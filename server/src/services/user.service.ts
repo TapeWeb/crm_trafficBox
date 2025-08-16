@@ -1,20 +1,8 @@
 import { prisma } from "../config/database";
-import bcrypt from "bcrypt";
-import crypto from "crypto";
-
-interface CreateUserData {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
-  gender: string;
-  age: number;
-}
-
-interface CheckUserData {
-  email: string;
-  password: string;
-}
+import { generateToken } from "../utils/generateToken.utils.ts";
+import { hashPassword } from "../utils/hashPassword.utils.ts";
+import { checkData } from "../utils/checkData.utils.ts";
+import { CreateUserData, CheckUserData } from "../types/user.types.ts";
 
 export const createUser = async (data: CreateUserData) => {
   const { name, surname, email, password, gender, age } = data;
@@ -25,8 +13,8 @@ export const createUser = async (data: CreateUserData) => {
   const exists = await prisma.users.findFirst({ where: { uEmail: email } });
   if (exists) throw new Error("Email already exists");
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const token = crypto.randomBytes(32).toString("hex");
+  const hashedPassword = await hashPassword(password, 10);
+  const tokenGenerate = await generateToken(32, "hex");
 
   const user = await prisma.users.create({
     data: {
@@ -36,7 +24,7 @@ export const createUser = async (data: CreateUserData) => {
       uPassword: hashedPassword,
       uGender: gender,
       uAge: age,
-      uToken: token,
+      uToken: tokenGenerate,
     },
   });
 
@@ -52,7 +40,7 @@ export const checkUser = async (data: CheckUserData) => {
   if (!user) throw new Error("User not found");
   if (!user.uPassword) throw new Error("User password missing in DB");
 
-  const match = await bcrypt.compare(password, user.uPassword);
+  const match = await checkData(password, user.uPassword);
   if (!match) throw new Error("Invalid credentials");
 
   return { token: user.uToken, message: "Login successfully" };

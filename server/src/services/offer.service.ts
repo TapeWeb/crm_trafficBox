@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { prisma } from "../config/database";
 import { getUser as getUserService } from "../services/user.service";
 import { CreateOfferData } from "../types/offer.types";
