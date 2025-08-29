@@ -18,21 +18,23 @@ export const ENV = {
   NODE_ENV: getEnvVar("DOCKER_MODE", "development"),
   COMPOSE_FILE: getEnvVar("COMPOSE_FILE"),
 
-  // MySQL
-  MYSQL_HOST: getEnvVar("MYSQL_HOST", "app_mysql"),
-  MYSQL_PORT: Number(getEnvVar("MYSQL_PORT", "3306")),
-  MYSQL_USER: getEnvVar("MYSQL_USER"),
-  MYSQL_PASSWORD: getEnvVar("MYSQL_PASSWORD"),
-  MYSQL_ROOT_PASSWORD: getEnvVar("MYSQL_ROOT_PASSWORD"),
-  MYSQL_DATABASE: getEnvVar("MYSQL_DATABASE"),
+  // PostgreSQL
+  POSTGRES_HOST: getEnvVar("POSTGRES_HOST", "app_postgresql"),
+  POSTGRES_PORT: Number(getEnvVar("POSTGRES_PORT", "5432")),
+  POSTGRES_USER: getEnvVar("POSTGRES_USER"),
+  POSTGRES_PASSWORD: getEnvVar("POSTGRES_PASSWORD"),
+  POSTGRES_ROOT_PASSWORD: getEnvVar("POSTGRES_ROOT_PASSWORD"),
+  POSTGRES_DB: getEnvVar("POSTGRES_DB"),
 
-  // Prisma Database URL
+  // Prisma / Database URL
   DATABASE_URL: getEnvVar(
     "DATABASE_URL",
-    `mysql://${process.env.MYSQL_USER}:${process.env.MYSQL_PASSWORD}@${process.env.MYSQL_HOST}:${process.env.MYSQL_PORT}/${process.env.MYSQL_DATABASE}`
+    `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}` +
+    `@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DB}?schema=public`
   ),
 
-  // PHPMyAdmin
-  PMA_INTERNAL_PORT: Number(getEnvVar("PMA_INTERNAL_PORT", "80")),
-  PMA_EXTERNAL_PORT: Number(getEnvVar("PMA_EXTERNAL_PORT", "8080")),
+  // pgAdmin
+  PGADMIN_EMAIL: getEnvVar("PGADMIN_EMAIL", "admin@admin.com"),
+  PGADMIN_PASSWORD: getEnvVar("PGADMIN_PASSWORD", "admin"),
+  PGADMIN_PORT: Number(getEnvVar("PGADMIN_PORT", "5050")),
 };

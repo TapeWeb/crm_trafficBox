@@ -1,25 +1,30 @@
-import { Link } from "react-router-dom";
 import "../../styles/components/UI/Button.module.scss";
+import { Link } from "react-router-dom";
 
-interface IProps {
+interface ButtonProps {
   content: string;
   link?: string;
   onClick?: () => void;
   className?: string;
+  isAnimated?: boolean;
 }
 
-export function Button({ content, link, onClick, className }: IProps) {
-  if (link) {
+export const Button = ({ content, link, onClick, className = "", isAnimated = false }: ButtonProps) => {
+  const logicButton = () => {
+    if (link && link.trim().length > 0) {
+      return (
+        <Link to={link} className={className} onClick={onClick}>
+          {content}
+        </Link>
+      );
+    }
+
     return (
-      <Link to={link} onClick={onClick} className={className}>
+      <button className={className} onClick={onClick}>
         {content}
-      </Link>
+      </button>
     );
-  }
+  };
 
-  return (
-    <button className={className} onClick={onClick}>
-      {content}
-    </button>
-  );
-}
+  return logicButton();
+};

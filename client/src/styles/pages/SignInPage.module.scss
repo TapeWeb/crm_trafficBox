@@ -1,3 +1,6 @@
+@use "../variables.scss" as *;
+
+
 .SignInStructure {
   display: flex;
   flex-direction: column;
@@ -37,7 +40,7 @@
         outline: none;
 
         &:focus {
-          outline: 0.1vh solid #ff0000;
+          outline: 0.1vh solid $primary-color;
         }
       }
     }

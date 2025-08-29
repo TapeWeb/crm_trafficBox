@@ -1,11 +1,18 @@
+@use "../../variables.scss" as *;
+
 button, a {
   text-decoration: none;
   padding: 0.5vh 1vw;
-  background: #ff0000;
+  background: $primary-color;
   border: none;
   color: #fff;
   font-size: 1.2rem;
   font-weight: bolder;
   cursor: pointer;
   border-radius: 0.2rem;
+  transition: 0.2s;
+  &:hover {
+    transform: scale(0.8);
+    background: $primary-color-hover;
+  }
 }

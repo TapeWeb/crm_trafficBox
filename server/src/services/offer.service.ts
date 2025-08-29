@@ -10,30 +10,27 @@ export const createOffer = async (data: CreateOfferData) => {
   const user = await getUserService(token);
   if (!user) throw new Error("User ID not found");
 
-
   return prisma.offers.create({
     data: {
-      oUID: user.id,
-      oName,
-      oDescribe,
-      oPrice,
-      oValues,
+      ouid: user.id,
+      oname: oName,
+      odescribe: oDescribe,
+      oprice: oPrice,
+      ovalues: oValues,
     },
   });
 };
 
+export const getOffersByUser = async (uid: number) => {
+  return prisma.offers.findMany({ where: { ouid: uid } });
+};
+
+export const deleteOffer = async (oid: number) => {
+  const deleted = await prisma.offers.deleteMany({ where: { oid } });
+  if (deleted.count === 0) throw new Error("Offer not found");
+};
 
 
 export const getAllOffers = async () => {
   return prisma.offers.findMany();
-};
-
-export const getOffersByUser = async (uID: number) => {
-  console.log("Hello");
-  return prisma.offers.findMany({ where: { oUID: uID } });
-};
-
-export const deleteOffer = async (oID: number) => {
-  const deleted = await prisma.offers.deleteMany({ where: { oID } });
-  if (deleted.count === 0) throw new Error("Offer not found");
 };

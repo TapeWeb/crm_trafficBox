@@ -1,3 +1,5 @@
+@use './variables' as *;
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,7 +12,7 @@ body {
 }
 
 body::selection {
-  background: #ff0000;
+  background: $primary-color;
 }
 
 h1 {

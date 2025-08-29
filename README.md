@@ -17,7 +17,7 @@ The application supports user registration and authentication. Once logged in, u
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/trafficbox.git
+git clone https://github.com/TapeWeb/trafficbox.git
 cd trafficbox
 ```
 
@@ -33,7 +33,7 @@ npm install
 3. Configure the database connection and environment variables in a `.env` file:
 
 ```env
-DATABASE_URL="mysql://user:password@localhost:3306/trafficbox"
+DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
 CLIENT_PORT=5173
 SERVER_PORT=3000
 ```

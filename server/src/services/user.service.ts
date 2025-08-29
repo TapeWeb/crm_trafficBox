@@ -10,7 +10,7 @@ export const createUser = async (data: CreateUserData) => {
   if (!password) throw new Error("Password is required");
   if (age < 16) throw new Error("User must be at least 16 years old");
 
-  const exists = await prisma.users.findFirst({ where: { uEmail: email } });
+  const exists = await prisma.users.findUnique({ where: { uemail: email } });
   if (exists) throw new Error("Email already exists");
 
   const hashedPassword = await hashPassword(password, 10);
@@ -18,17 +18,18 @@ export const createUser = async (data: CreateUserData) => {
 
   const user = await prisma.users.create({
     data: {
-      uName: name,
-      uSurname: surname,
-      uEmail: email,
-      uPassword: hashedPassword,
-      uGender: gender,
-      uAge: age,
-      uToken: tokenGenerate,
+      uname: name,
+      usurname: surname,
+      uemail: email,
+      upassword: hashedPassword,
+      ugender: gender,
+      uage: age,
+      utoken: tokenGenerate,
     },
   });
 
-  return { token: user.uToken, message: "User successfully created" };
+
+  return { token: user.utoken, message: "User successfully created" };
 };
 
 export const checkUser = async (data: CheckUserData) => {
@@ -36,26 +37,25 @@ export const checkUser = async (data: CheckUserData) => {
 
   if (!password) throw new Error("Password is required");
 
-  const user = await prisma.users.findFirst({ where: { uEmail: email } });
+  const user = await prisma.users.findUnique({ where: { uemail: email } });
   if (!user) throw new Error("User not found");
-  if (!user.uPassword) throw new Error("User password missing in DB");
 
-  const match = await checkData(password, user.uPassword);
+  const match = await checkData(password, user.upassword);
   if (!match) throw new Error("Invalid credentials");
 
-  return { token: user.uToken, message: "Login successfully" };
+  return { token: user.utoken, message: "Login successfully" };
 };
 
 export const getUser = async (token: string) => {
-  const user = await prisma.users.findFirst({ where: { uToken: token } });
+  const user = await prisma.users.findFirst({ where: { utoken: token } });
   if (!user) throw new Error("User not found");
 
   return {
-    id: user.uID,
-    name: user.uName,
-    surname: user.uSurname,
-    email: user.uEmail,
-    age: user.uAge,
-    gender: user.uGender,
+    id: user.uid,
+    name: user.uname,
+    surname: user.usurname,
+    email: user.uemail,
+    age: user.uage,
+    gender: user.ugender,
   };
 };
