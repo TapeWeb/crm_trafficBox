@@ -1,4 +1,3 @@
-// src/pages/MyOffersPage.tsx
 import { Fragment, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import styles from "../styles/pages/MyOffersPage.module.scss";

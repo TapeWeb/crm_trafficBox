@@ -1,4 +1,3 @@
-// src/stores/myOffers.store.ts
 import { makeAutoObservable, runInAction } from "mobx";
 
 interface Offer {

@@ -1,4 +1,3 @@
-// src/stores/createOffer.store.ts
 import { makeAutoObservable, runInAction } from "mobx";
 
 class CreateOfferStore {
