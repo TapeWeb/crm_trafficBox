@@ -8,20 +8,31 @@ import {ProfilePage} from "../pages/ProfilePage.tsx";
 import {OffersPage} from "../pages/OffersPage.tsx";
 import {CreateOffer} from "../pages/CreateOffer.tsx";
 import {MyOffersPage} from "../pages/MyOffersPage.tsx";
+import {AdminPanel} from "../pages/AdminPanel.tsx";
+import {AdminPanel_Users} from "../components/AdminPanel/AdminPanel_Users.tsx";
+import {AdminPanel_Offers} from "../components/AdminPanel/AdminPanel_Offers.tsx";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App/>,
-    errorElement: <ErrorBoundary/>,
+    path: "",
+    element: <App />,
+    errorElement: <ErrorBoundary />,
     children: [
-      { index: true, element: <MainPage/> },
-      { path: "/signUp", element: <SignUpPage/> },
-      { path: "/signIn", element: <SignInPage/> },
-      { path: "/profile", element: <ProfilePage/> },
-      { path: "/offers", element: <OffersPage/> },
-      { path: "/createOffer", element: <CreateOffer/> },
-      { path: "/myOffers", element: <MyOffersPage/>}
+      { index: true, element: <MainPage /> },
+      { path: "signUp", element: <SignUpPage /> },
+      { path: "signIn", element: <SignInPage /> },
+      { path: "profile", element: <ProfilePage /> },
+      { path: "offers", element: <OffersPage /> },
+      { path: "createOffer", element: <CreateOffer /> },
+      { path: "myOffers", element: <MyOffersPage /> },
+      {
+        path: "adminPanel",
+        element: <AdminPanel />,
+        children: [
+          { path: "adminPanel_Users", element: <AdminPanel_Users /> },
+          { path: "adminPanel_Offers", element: <AdminPanel_Offers /> }
+        ]
+      }
     ]
   }
 ]);

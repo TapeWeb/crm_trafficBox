@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
+
 class TokenStore {
   token = "";
 

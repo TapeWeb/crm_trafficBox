@@ -3,6 +3,7 @@
 button, a {
   text-decoration: none;
   padding: 0.5vh 1vw;
+  max-width: max-content;
   background: $primary-color;
   border: none;
   color: #fff;
@@ -10,9 +11,7 @@ button, a {
   font-weight: bolder;
   cursor: pointer;
   border-radius: 0.2rem;
-  transition: 0.2s;
   &:hover {
-    transform: scale(0.8);
     background: $primary-color-hover;
   }
 }

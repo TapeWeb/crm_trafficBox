@@ -7,9 +7,9 @@ import { CreateUserData, CheckUserData } from "../types/user.types.ts";
 export const createUser = async (data: CreateUserData) => {
   const { name, surname, email, password, gender, age } = data;
 
+
   if (!password) throw new Error("Password is required");
   if (age < 16) throw new Error("User must be at least 16 years old");
-
   const exists = await prisma.users.findUnique({ where: { uemail: email } });
   if (exists) throw new Error("Email already exists");
 
@@ -24,6 +24,7 @@ export const createUser = async (data: CreateUserData) => {
       upassword: hashedPassword,
       ugender: gender,
       uage: age,
+      urole: "User",
       utoken: tokenGenerate,
     },
   });
@@ -57,5 +58,31 @@ export const getUser = async (token: string) => {
     email: user.uemail,
     age: user.uage,
     gender: user.ugender,
+    role: user.urole,
   };
+};
+
+export const getAllUsers = async () => {
+  return prisma.users.findMany(
+    {
+      select: {
+        uid: true,
+        uname: true,
+        usurname: true,
+        uemail: true,
+        uage: true,
+        ugender: true,
+        urole: true,
+      }
+    }
+  );
+};
+
+export const removeUser = async (data: { id: number }) => {
+  const { id } = data;
+  const user = await prisma.users.findUnique({ where: { uid: id } });
+  if (!user) throw new Error("User not found");
+
+  await prisma.users.delete({ where: { uid: id } });
+  return { message: "User deleted" };
 };

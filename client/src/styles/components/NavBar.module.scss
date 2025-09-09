@@ -3,20 +3,23 @@
   align-items: center;
   justify-content: space-between;
   text-align: center;
-  padding: 3vh;
-  .authorizationBox {
+  padding: 1vh;
+  background: #181818;
+  .navigationVerifyBox {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    gap: 1vh;
+    gap: 0.5rem;
+    h1 {
+      color: #fff;
+    }
   }
   .navigationLinkBox {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 1vh;
+    justify-content: space-between;
+    gap: 1rem;
   }
 }

@@ -1,22 +1,25 @@
-import { Fragment, type ChangeEvent } from "react";
+import { Fragment, type ChangeEvent, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/pages/SignUpPage.module.scss";
 import { Button } from "../components/UI/Button.tsx";
 import UserStore from "../stores/user.store";
+import TokenStore from "../stores/token.store.ts";
 
 export const SignUpPage = observer(() => {
   const navigate = useNavigate();
 
-  const handleSignUp = async () => {
-    const name = UserStore.getData("name");
-    const surname = UserStore.getData("surname");
-    const email = UserStore.getData("email");
-    const password = UserStore.getData("password");
-    const age = Number(UserStore.getData("age"));
-    const gender = UserStore.getData("gender");
+  useEffect(() => {
+    if (TokenStore.getToken()) {
+      alert("You are already authorized");
+      navigate("/");
+    }
+  }, []);
 
-    if (!name || !surname || !email || !password || age < 16) {
+  const handleSignUp = async () => {
+    const { name, surname, email, password, age, gender, role } = UserStore;
+
+    if (!name || !surname || !email || !password || Number(age) < 16) {
       alert("Please fill in all fields correctly. Age must be at least 16.");
       return;
     }
@@ -25,7 +28,7 @@ export const SignUpPage = observer(() => {
       const res = await fetch("http://localhost:3000/create-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, surname, email, password, age, gender }),
+        body: JSON.stringify({ name, surname, email, password, age: Number(age), gender, role }),
       });
 
       const data = await res.json();
@@ -40,60 +43,41 @@ export const SignUpPage = observer(() => {
     }
   };
 
-  const handleChangeGender = (event: ChangeEvent<HTMLSelectElement>) => {
-    UserStore.changeData("gender", event.target.value);
-  };
+  const handleChange = (field: keyof typeof UserStore) =>
+    (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const value = field === "age" ? Number(e.target.value) : e.target.value;
+      UserStore.changeData(field, value);
+    };
 
   return (
     <Fragment>
-      <title>TrafficBox - Sign Up</title>
       <section className={styles.SignUpStructure}>
         <div className={styles.SignUpBox}>
           <h1>Sign Up</h1>
           <div className={styles.inputsBox}>
             <label>
               Your name
-              <input
-                type="text"
-                value={UserStore.getData("name")}
-                onChange={(e) => UserStore.changeData("name", e.target.value)}
-              />
+              <input type="text" value={UserStore.name} onChange={handleChange("name")} />
             </label>
             <label>
               Surname
-              <input
-                type="text"
-                value={UserStore.getData("surname")}
-                onChange={(e) => UserStore.changeData("surname", e.target.value)}
-              />
+              <input type="text" value={UserStore.surname} onChange={handleChange("surname")} />
             </label>
             <label>
               Age
-              <input
-                type="number"
-                value={UserStore.getData("age")}
-                onChange={(e) => UserStore.changeData("age", e.target.value)}
-              />
+              <input type="number" value={UserStore.age} onChange={handleChange("age")} />
             </label>
             <label>
               Password
-              <input
-                type="password"
-                value={UserStore.getData("password")}
-                onChange={(e) => UserStore.changeData("password", e.target.value)}
-              />
+              <input type="password" value={UserStore.password} onChange={handleChange("password")} />
             </label>
             <label>
               Email
-              <input
-                type="email"
-                value={UserStore.getData("email")}
-                onChange={(e) => UserStore.changeData("email", e.target.value)}
-              />
+              <input type="email" value={UserStore.email} onChange={handleChange("email")} />
             </label>
             <label>
-              Your sex
-              <select value={UserStore.getData("gender")} onChange={handleChangeGender}>
+              Your gender
+              <select value={UserStore.gender} onChange={handleChange("gender")}>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="DontTalkAboutGender">Don't talk about gender</option>

@@ -13,7 +13,7 @@ services:
       - "${POSTGRES_PORT}:5432"
     volumes:
       - ../volumes/postgres_data:/var/lib/postgresql/data
-      - ../sql-files/init.sql:/docker-entrypoint-initdb.d/init.sql:rw
+      - ../sql-files/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks:
       - ${NETWORK_NAME}
     env_file:
@@ -35,7 +35,7 @@ services:
     env_file:
       - ../../.env
     volumes:
-      - ../pg-admin-connect/servers.json:/pgadmin4/servers.json
+      - ../pg-admin-connect/servers.json:/pgadmin4/servers.json:ro
 
   app_server:
     build:
@@ -68,9 +68,6 @@ services:
       - "${CLIENT_PORT}:${CLIENT_PORT}"
     env_file:
       - ../../.env
-
-volumes:
-  postgres_data:
 
 networks:
   app_network:

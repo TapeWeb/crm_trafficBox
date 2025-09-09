@@ -11,6 +11,6 @@ const router = Router();
 router.post("/create-offer", createOffer);
 router.post("/check-offers", checkOffers);
 router.post("/check-my-offers", checkMyOffers);
-router.post("/delete-offer", deleteOffer);
+router.post("/delete-offer/:id", deleteOffer);
 
 export default router;

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 
 interface Offer {
   id: number;
@@ -11,14 +11,19 @@ interface Offer {
 
 class OffersStore {
   offers: Offer[] = [];
-  loading = false;
+  loading: boolean  = false;
+  error: string | null = null;
 
   constructor() {
     makeAutoObservable(this);
   }
 
   fetchOffers = async () => {
-    this.loading = true;
+    runInAction(() => {
+      this.loading = true;
+      this.error = null;
+    });
+
     try {
       const res = await fetch("http://localhost:3000/check-offers", {
         method: "POST",
@@ -38,11 +43,16 @@ class OffersStore {
           values: offer.ovalues,
         }))
         : [];
-    } catch (err) {
-      console.error(err);
-      this.offers = [];
+    } catch (err: any) {
+      console.error("Error fetching offers:", err);
+      runInAction(() => {
+        this.error = err.message || "Error fetching offers";
+        this.offers = [];
+      });
     } finally {
-      this.loading = false;
+      runInAction(() => {
+        this.loading = false;
+      });
     }
   };
 }

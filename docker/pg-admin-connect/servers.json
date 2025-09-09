@@ -1,13 +1,14 @@
 {
   "Servers": {
     "1": {
-      "Name": "Local PostgreSQL",
+      "Name": "Local PostgresSQL",
       "Group": "Servers",
-      "Port": 5432,
-      "Username": "app_postgresql_user",
       "Host": "app_postgresql",
+      "Port": 5432,
+      "MaintenanceDB": "app_postgresql_database",
+      "Username": "app_postgresql_user",
       "SSLMode": "prefer",
-      "MaintenanceDB": "app_postgresql_database"
+      "Password": "app_postgresql_password"
     }
   }
 }

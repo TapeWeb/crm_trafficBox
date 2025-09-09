@@ -1,0 +1,25 @@
+.AdminPanelStructure {
+  display: flex;
+  flex-direction: column;
+  main {
+    display: flex;
+    flex-direction: row;
+    .SideBar {
+      display: flex;
+      flex-direction: row;
+      padding: 1rem;
+      gap: 0.5rem;
+      background: #181818;
+      max-width: max-content;
+      height: auto;
+      .ContentBar {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

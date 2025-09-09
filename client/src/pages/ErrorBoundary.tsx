@@ -3,7 +3,7 @@ import {Logo} from "../components/UI/Logo.tsx";
 import styles from "../styles/pages/ErrorBoundary.module.scss";
 import {Button} from "../components/UI/Button.tsx";
 
-export function ErrorBoundary(){
+export const ErrorBoundary = () => {
   return (
     <Fragment>
       <title>TrafficBox - Error</title>

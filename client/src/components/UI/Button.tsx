@@ -9,7 +9,7 @@ interface ButtonProps {
   isAnimated?: boolean;
 }
 
-export const Button = ({ content, link, onClick, className = "", isAnimated = false }: ButtonProps) => {
+export const Button = ({ content, link, onClick, className = "" }: ButtonProps) => {
   const logicButton = () => {
     if (link && link.trim().length > 0) {
       return (

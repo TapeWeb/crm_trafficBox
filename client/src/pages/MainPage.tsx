@@ -3,7 +3,7 @@ import {NavBar} from "../components/NavBar.tsx";
 import styles from "../styles/pages/MainPage.module.scss"
 import {InfoBar} from "../components/InfoBar.tsx";
 
-export function MainPage() {
+export const MainPage = () => {
   return (
     <Fragment>
       <title>TrafficBox - Main Page</title>
