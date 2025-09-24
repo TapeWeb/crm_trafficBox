@@ -4,9 +4,9 @@ interface Offer {
   id: number;
   uid: number;
   name: string;
-  describe?: string;
+  description?: string;
   price: number;
-  values: number;
+  value: number;
 }
 
 class MyOffersStore {
@@ -18,51 +18,49 @@ class MyOffersStore {
     makeAutoObservable(this);
   }
 
-  fetchUserData = async (token: string) => {
-    this.loading = true;
+  setLoading(loading: boolean) {
+    this.loading = loading;
+  }
+
+  fetchMyOffers = async (token?: string) => {
+    this.setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/get-user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uToken: token }),
-      });
+      if (!this.uID) {
+        if (!token) {
+          console.error("No token provided, cannot fetch user.");
+          return;
+        }
 
-      if (!res.ok) throw new Error(await res.text());
+        const resUser = await fetch(
+          `${import.meta.env.VITE_SERVER_API_URL}/getCurrentUser?token=${encodeURIComponent(token)}`,
+          { method: "GET", headers: { "Content-Type": "application/json" } }
+        );
 
-      const result = await res.json();
+        if (!resUser.ok) throw new Error(await resUser.text());
+
+        const userData = await resUser.json();
+        runInAction(() => {
+          this.uID = userData.id;
+        });
+      }
+
+      const resOffers = await fetch(
+        `${import.meta.env.VITE_SERVER_API_URL}/getMyOffers?id=${this.uID}`,
+        { method: "GET", headers: { "Content-Type": "application/json" } }
+      );
+
+      if (!resOffers.ok) throw new Error(await resOffers.text());
+
+      const offers = await resOffers.json();
       runInAction(() => {
-        this.uID = result.uid;
-      });
-    } catch (err) {
-      console.error("Error fetching user:", err);
-    } finally {
-      runInAction(() => (this.loading = false));
-    }
-  };
-
-  fetchMyOffers = async () => {
-    if (this.uID === null) return;
-
-    this.loading = true;
-    try {
-      const res = await fetch("http://localhost:3000/check-my-offers", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: this.uID }),
-      });
-
-      if (!res.ok) throw new Error(await res.text());
-
-      const result = await res.json();
-      runInAction(() => {
-        this.offers = Array.isArray(result)
-          ? result.map((offer: any) => ({
-            id: offer.oid,
-            uid: offer.ouid,
-            name: offer.oname,
-            describe: offer.odescribe,
-            price: offer.oprice,
-            values: offer.ovalues,
+        this.offers = Array.isArray(offers)
+          ? offers.map((offer: any) => ({
+            id: offer.id,
+            uid: offer.uid,
+            name: offer.name,
+            description: offer.description,
+            price: offer.price,
+            value: offer.value,
           }))
           : [];
       });
@@ -70,25 +68,28 @@ class MyOffersStore {
       console.error("Error fetching offers:", err);
       runInAction(() => (this.offers = []));
     } finally {
-      runInAction(() => (this.loading = false));
+      this.setLoading(false);
     }
   };
 
-  deleteOffer = async (offerId: number) => {
-    try {
-      const res = await fetch("http://localhost:3000/delete-offer", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ oid: offerId }),
-      });
 
-      if (!res.ok) throw new Error(await res.text());
+  deleteOffer = async (offerId: number) => {
+    this.setLoading(true);
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_SERVER_API_URL}/deleteOffer?id=${offerId}`,
+        { method: "DELETE", headers: { "Content-Type": "application/json" } }
+      );
+
+      if (!res.ok) console.error(await res.text());
 
       runInAction(() => {
         this.offers = this.offers.filter((offer) => offer.id !== offerId);
       });
     } catch (err) {
       console.error("Error deleting offer:", err);
+    } finally {
+      this.setLoading(false);
     }
   };
 }

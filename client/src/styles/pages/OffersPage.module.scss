@@ -1,15 +1,18 @@
+@use '../variables' as *;
+
 .OffersStructure {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: $bg-color;
   .offerBox {
     display: flex;
     flex-direction: column;
     padding: 1vh 1vw;
-    background: #303030;
-    color: #fff;
+    background: $box-bg;
+    color: $text-color;
     border-radius: 1vh;
     gap: 1rem;
     .productBox {
@@ -17,8 +20,15 @@
       flex-direction: column;
       padding: 1vh 1vw;
       border-radius: 1vh;
-      background: #404040;
+      background: $box-bg;
       gap: 0.5rem;
+      box-shadow: 0 0 2vh $shadow-color;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.8vh 2rem rgba(0, 0, 0, 0.15);
+      }
     }
     .buttonsBox {
       display: flex;
@@ -27,5 +37,10 @@
       align-items: center;
       gap: 0.5rem;
     }
+  }
+
+  h1, p {
+    font-weight: 400;
+    color: $text-color;
   }
 }

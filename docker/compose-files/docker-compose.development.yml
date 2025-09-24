@@ -47,7 +47,7 @@ services:
       - ../../server:/server
       - /server/node_modules
     ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
+      - "${VITE_SERVER_PORT}:${VITE_SERVER_PORT}"
     networks:
       - ${NETWORK_NAME}
     depends_on:
@@ -65,7 +65,7 @@ services:
       - ../../client:/client
       - /client/node_modules
     ports:
-      - "${CLIENT_PORT}:${CLIENT_PORT}"
+      - "${VITE_CLIENT_PORT}:${VITE_CLIENT_PORT}"
     env_file:
       - ../../.env
 

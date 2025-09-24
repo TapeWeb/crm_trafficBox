@@ -1,16 +1,16 @@
 import { Router } from "express";
 import {
   createOffer,
-  checkOffers,
-  checkMyOffers,
   deleteOffer,
+  getMyOffers,
+  getAllOffers,
 } from "../controllers/offer.controller.ts";
 
 const router = Router();
 
-router.post("/create-offer", createOffer);
-router.post("/check-offers", checkOffers);
-router.post("/check-my-offers", checkMyOffers);
-router.post("/delete-offer/:id", deleteOffer);
+router.post("/createOffer", createOffer);
+router.get("/getAllOffers", getAllOffers);
+router.get("/getMyOffers", getMyOffers);
+router.delete("/deleteOffer/:id", deleteOffer);
 
 export default router;

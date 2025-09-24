@@ -1,7 +1,7 @@
 export interface CreateOfferData {
-  oName: string;
-  oDescribe?: string;
-  oPrice: number;
-  oValues: number;
+  name: string;
+  description?: string;
+  price: number;
+  value: number;
   token: string;
 }

@@ -1,17 +1,22 @@
+@use '../variables' as *;
+
 .AdminPanelStructure {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  background: $box-bg;
+
   main {
     display: flex;
     flex-direction: row;
     .SideBar {
       display: flex;
-      flex-direction: row;
-      padding: 1rem;
-      gap: 0.5rem;
-      background: #181818;
-      max-width: max-content;
-      height: auto;
+      flex-direction: column;
+      padding: 1rem 1rem;
+      gap: 1rem;
+      background: $box-bg;
+      border-radius: 0.5rem;
+      box-shadow: 2px 0 0.5rem rgba(0, 0, 0, 0.3);
       .ContentBar {
         display: flex;
         flex-direction: column;
@@ -19,7 +24,20 @@
         text-align: center;
         justify-content: center;
         align-items: center;
+        padding: 0.5rem 0;
+        h1 {
+          font-size: 1rem;
+          font-weight: 400;
+          color: $text-color;
+        }
       }
+    }
+
+    .MainContent {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+      color: #fff;
     }
   }
 }

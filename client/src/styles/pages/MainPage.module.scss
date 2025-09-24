@@ -1,11 +1,63 @@
+@use "../variables.scss" as *;
+
 .MainStructure {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: $bg-color;
+  padding: 1rem;
   main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 77.5vh;
     text-align: center;
+    flex: 1;
+    padding: 1rem 7vh;
+    border-radius: 1rem;
+    box-shadow: 0 0 2vh $shadow-color;
+    transition: transform 0.3s ease;
+    background: $box-bg;
 
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .containerConstruct {
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      box-shadow: 0 0.25rem 0.6rem rgba(0, 0, 0, 0.1);
+      color: $text-color;
+      transition: transform 0.3s ease;
+      max-width: 100%;
+      width: 80%;
+      margin: 1rem auto;
+      background: $box-bg;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    h1 {
+      font-size: 1.7rem;
+      font-weight: bold;
+      color: $text-color;
+    }
+  }
+}
+
+@media (max-width: $tablet-width) {
+  main, .infoBarSection {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: $phone-width) {
+  main, .infoBarSection {
+    padding: 1rem;
+    gap: 1rem;
   }
 }

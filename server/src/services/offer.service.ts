@@ -1,9 +1,9 @@
 import { prisma } from "../config/database";
-import { getUser as getUserService } from "../services/user.service";
+import { getCurrentUser as getUserService } from "../services/user.service";
 import { CreateOfferData } from "../types/offer.types";
 
 export const createOffer = async (data: CreateOfferData) => {
-  const { oName, oDescribe, oPrice, oValues, token } = data;
+  const { name, description, price, value, token } = data;
 
   if (!token) throw new Error("Token is required");
 
@@ -12,21 +12,21 @@ export const createOffer = async (data: CreateOfferData) => {
 
   return prisma.offers.create({
     data: {
-      ouid: user.id,
-      oname: oName,
-      odescribe: oDescribe,
-      oprice: oPrice,
-      ovalues: oValues,
+      uid: user.uid,
+      name: name,
+      description: description,
+      price: price,
+      value: value,
     },
   });
 };
 
-export const getOffersByUser = async (uid: number) => {
-  return prisma.offers.findMany({ where: { ouid: uid } });
+export const getOffersByUser = async (userId: number) => {
+  return prisma.offers.findMany({ where: { uid: userId } });
 };
 
-export const deleteOffer = async (oid: number) => {
-  const deleted = await prisma.offers.deleteMany({ where: { oid } });
+export const deleteOffer = async (id: number) => {
+  const deleted = await prisma.offers.deleteMany({ where: { id } });
   if (deleted.count === 0) throw new Error("Offer not found");
 };
 

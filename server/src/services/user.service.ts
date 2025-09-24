@@ -7,10 +7,10 @@ import { CreateUserData, CheckUserData } from "../types/user.types.ts";
 export const createUser = async (data: CreateUserData) => {
   const { name, surname, email, password, gender, age } = data;
 
-
   if (!password) throw new Error("Password is required");
   if (age < 16) throw new Error("User must be at least 16 years old");
-  const exists = await prisma.users.findUnique({ where: { uemail: email } });
+
+  const exists = await prisma.users.findUnique({ where: { email } });
   if (exists) throw new Error("Email already exists");
 
   const hashedPassword = await hashPassword(password, 10);
@@ -18,19 +18,19 @@ export const createUser = async (data: CreateUserData) => {
 
   const user = await prisma.users.create({
     data: {
-      uname: name,
-      usurname: surname,
-      uemail: email,
-      upassword: hashedPassword,
-      ugender: gender,
-      uage: age,
-      urole: "User",
-      utoken: tokenGenerate,
+      name,
+      surname,
+      email,
+      password: hashedPassword,
+      gender,
+      age,
+      role: "User",
+      balance: 0,
+      token: tokenGenerate,
     },
   });
 
-
-  return { token: user.utoken, message: "User successfully created" };
+  return { token: user.token, message: "User successfully created" };
 };
 
 export const checkUser = async (data: CheckUserData) => {
@@ -38,51 +38,55 @@ export const checkUser = async (data: CheckUserData) => {
 
   if (!password) throw new Error("Password is required");
 
-  const user = await prisma.users.findUnique({ where: { uemail: email } });
+  const user = await prisma.users.findUnique({ where: { email } });
   if (!user) throw new Error("User not found");
 
-  const match = await checkData(password, user.upassword);
+  const match = await checkData(password, user.password);
   if (!match) throw new Error("Invalid credentials");
 
-  return { token: user.utoken, message: "Login successfully" };
+  return { token: user.token, message: "Login successfully" };
 };
 
-export const getUser = async (token: string) => {
-  const user = await prisma.users.findFirst({ where: { utoken: token } });
+export const getCurrentUser = async (token: string) => {
+  const user = await prisma.users.findFirst({ where: { token } });
   if (!user) throw new Error("User not found");
 
   return {
-    id: user.uid,
-    name: user.uname,
-    surname: user.usurname,
-    email: user.uemail,
-    age: user.uage,
-    gender: user.ugender,
-    role: user.urole,
+    uid: user.id,
+    name: user.name,
+    surname: user.surname,
+    email: user.email,
+    age: user.age,
+    gender: user.gender,
+    role: user.role,
+    balance: user.balance,
   };
 };
 
+
 export const getAllUsers = async () => {
-  return prisma.users.findMany(
-    {
-      select: {
-        uid: true,
-        uname: true,
-        usurname: true,
-        uemail: true,
-        uage: true,
-        ugender: true,
-        urole: true,
-      }
+  const users = await prisma.users.findMany({
+    select: {
+      id: true,
+      name: true,
+      surname: true,
+      email: true,
+      age: true,
+      gender: true,
+      role: true,
+      balance: true,
     }
-  );
+  });
+
+  return users as any;
 };
 
 export const removeUser = async (data: { id: number }) => {
   const { id } = data;
-  const user = await prisma.users.findUnique({ where: { uid: id } });
+
+  const user = await prisma.users.findUnique({ where: { id } });
   if (!user) throw new Error("User not found");
 
-  await prisma.users.delete({ where: { uid: id } });
+  await prisma.users.delete({ where: { id } });
   return { message: "User deleted" };
 };

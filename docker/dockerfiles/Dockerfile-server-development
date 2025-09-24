@@ -13,4 +13,4 @@ RUN npx prisma generate --schema=./prisma/schema.prisma
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "sleep 30 && npm run dev"]
+CMD ["sh", "-c", "sleep 15 && npm run dev"]

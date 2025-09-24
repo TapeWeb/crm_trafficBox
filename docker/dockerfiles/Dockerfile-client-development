@@ -4,10 +4,10 @@ WORKDIR /client
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 COPY . .
 
 EXPOSE 7777
 
-CMD ["sh", "-c", "sleep 40 && npm run dev -- --host"]
+CMD ["sh", "-c", "sleep 15 && npm run dev -- --host"]

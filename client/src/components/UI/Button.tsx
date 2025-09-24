@@ -9,22 +9,20 @@ interface ButtonProps {
   isAnimated?: boolean;
 }
 
-export const Button = ({ content, link, onClick, className = "" }: ButtonProps) => {
-  const logicButton = () => {
-    if (link && link.trim().length > 0) {
-      return (
-        <Link to={link} className={className} onClick={onClick}>
-          {content}
-        </Link>
-      );
-    }
+export const Button = ({ content, link, onClick, className , isAnimated = false }: ButtonProps) => {
+  const classes = `${className} ${isAnimated ? "animated-btn" : ""}`;
 
+  if (link && link.trim().length > 0) {
     return (
-      <button className={className} onClick={onClick}>
+      <Link to={link} className={classes} onClick={onClick}>
         {content}
-      </button>
+      </Link>
     );
-  };
+  }
 
-  return logicButton();
+  return (
+    <button className={classes} onClick={onClick}>
+      {content}
+    </button>
+  );
 };

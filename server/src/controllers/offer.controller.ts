@@ -10,7 +10,7 @@ export const createOffer = async (req: Request, res: Response) => {
   }
 }
 
-export const checkOffers = async (req: Request, res: Response) => {
+export const getAllOffers = async (req: Request, res: Response) => {
   try {
     const offers = await offerService.getAllOffers();
     res.status(200).json(offers);
@@ -19,20 +19,27 @@ export const checkOffers = async (req: Request, res: Response) => {
   }
 }
 
-export const checkMyOffers = async (req: Request, res: Response) => {
+export const getMyOffers = async (req: Request, res: Response) => {
   try {
-    const offers = await offerService.getOffersByUser(req.body.id);
+    const userId = Number(req.query.id);
+    if (!userId) return res.status(400).json({ error: "User ID is required" });
+
+    const offers = await offerService.getOffersByUser(userId);
     res.status(200).json(offers);
   } catch (err: any) {
-    res.status(400).json({message: err.message});
+    console.error("getMyOffers error:", err);
+    res.status(500).json({ error: err.message });
   }
-}
+};
 
 export const deleteOffer = async (req: Request, res: Response) => {
   try {
-    await offerService.deleteOffer(req.body.oID);
-    res.status(200).json({message: "Offer deleted successfully."});
+    const id = req.query.id as string | undefined;
+    if (!id) return res.status(400).json({ message: "Offer ID is required" });
+
+    await offerService.deleteOffer(Number(id));
+    res.status(200).json({ message: "Offer deleted successfully." });
   } catch (err: any) {
-    res.status(400).json({message: err.message});
+    res.status(400).json({ message: err.message });
   }
-}
+};

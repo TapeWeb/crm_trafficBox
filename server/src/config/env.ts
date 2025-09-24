@@ -10,31 +10,35 @@ function getEnvVar(key: string, defaultValue?: string): string {
 }
 
 export const ENV = {
-  // Server & Client
-  SERVER_PORT: Number(getEnvVar("SERVER_PORT", "3000")),
-  CLIENT_PORT: Number(getEnvVar("CLIENT_PORT", "5173")),
-
-  // Docker / Environment
-  NODE_ENV: getEnvVar("DOCKER_MODE", "development"),
-  COMPOSE_FILE: getEnvVar("COMPOSE_FILE"),
-
   // PostgreSQL
-  POSTGRES_HOST: getEnvVar("POSTGRES_HOST", "app_postgresql"),
-  POSTGRES_PORT: Number(getEnvVar("POSTGRES_PORT", "5432")),
+  POSTGRES_HOST: getEnvVar("POSTGRES_HOST"),
+  POSTGRES_PORT: getEnvVar("POSTGRES_PORT"),
   POSTGRES_USER: getEnvVar("POSTGRES_USER"),
   POSTGRES_PASSWORD: getEnvVar("POSTGRES_PASSWORD"),
-  POSTGRES_ROOT_PASSWORD: getEnvVar("POSTGRES_ROOT_PASSWORD"),
   POSTGRES_DB: getEnvVar("POSTGRES_DB"),
+  DATABASE_URL: getEnvVar("DATABASE_URL"),
 
-  // Prisma / Database URL
-  DATABASE_URL: getEnvVar(
-    "DATABASE_URL",
-    `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}` +
-    `@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DB}?schema=public`
-  ),
+  // PGAdmin
+  PGADMIN_DEFAULT_EMAIL: getEnvVar("PGADMIN_DEFAULT_EMAIL"),
+  PGADMIN_DEFAULT_PASSWORD: getEnvVar("PGADMIN_DEFAULT_PASSWORD"),
+  PGADMIN_PORT: getEnvVar("PGADMIN_PORT"),
 
-  // pgAdmin
-  PGADMIN_EMAIL: getEnvVar("PGADMIN_EMAIL", "admin@admin.com"),
-  PGADMIN_PASSWORD: getEnvVar("PGADMIN_PASSWORD", "admin"),
-  PGADMIN_PORT: Number(getEnvVar("PGADMIN_PORT", "5050")),
+  // Server
+  VITE_SERVER_PORT: getEnvVar("SERVER_PORT"),
+  VITE_SERVER_API_URL: getEnvVar("SERVER_API_URL"),
+
+  // Client
+  VITE_CLIENT_PORT: getEnvVar("CLIENT_PORT"),
+  VITE_CLIENT_API_URL: getEnvVar("CLIENT_API_URL"),
+
+  // Docker
+  DOCKER_MODE: getEnvVar("DOCKER_MODE"),
+  COMPOSE_FILE: getEnvVar("COMPOSE_FILE"),
+
+  CONTAINER_NAME_POSTGRESQL: getEnvVar("CONTAINER_NAME_POSTGRESQL"),
+  CONTAINER_NAME_PGADMIN: getEnvVar("CONTAINER_NAME_PGADMIN"),
+  CONTAINER_NAME_SERVER: getEnvVar("CONTAINER_NAME_SERVER"),
+  CONTAINER_NAME_CLIENT: getEnvVar("CONTAINER_NAME_CLIENT"),
+
+  NETWORK_NAME: getEnvVar("NETWORK_NAME"),
 };

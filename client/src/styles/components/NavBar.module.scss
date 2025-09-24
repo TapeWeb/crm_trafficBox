@@ -1,25 +1,78 @@
+@use "../variables.scss" as *;
+
 .navBarSection {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
-  text-align: center;
-  padding: 1vh;
-  background: #181818;
+  align-items: center;
+  padding: 1rem 1rem;
+  background: $box-bg;
+  border-radius: 1rem;
+  box-shadow: 0 0.4vh 1.2vh $shadow-color;
+  animation: fadeIn 0.5s ease-in-out;
+  transition: all 0.3s ease;
+  width: 52%;
+  max-width: 100%;
+  margin: 1rem auto;
+
+  &:hover {
+    transform: scaleX(1.1);
+  }
+
   .navigationVerifyBox {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: center;
     gap: 0.5rem;
+
     h1 {
-      color: #fff;
+      color: $text-color;
+      font-weight: 600;
+      font-size: 1rem;
     }
   }
+
   .navigationLinkBox {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
     gap: 1rem;
+
+    a, button {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      background: $primary-color;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      &:hover {
+        background: $primary-color-hover;
+        transform: translateY(-0.125rem);
+        box-shadow: 0 0.25rem 0.75rem rgba($primary-color, 0.3);
+      }
+
+      &:active {
+        transform: scale(0.97);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: $tablet-width) {
+  .navBarSection {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: $phone-width) {
+  .navBarSection {
+    width: 95%;
+    padding: 0.8rem 1rem;
+    border-radius: 1.5rem;
   }
 }

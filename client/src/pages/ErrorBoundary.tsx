@@ -4,16 +4,24 @@ import styles from "../styles/pages/ErrorBoundary.module.scss";
 import {Button} from "../components/UI/Button.tsx";
 
 export const ErrorBoundary = () => {
-  return (
-    <Fragment>
-      <title>TrafficBox - Error</title>
-      <section className={styles.ErrorStructure}>
-        <div className={styles.ErrorBox}>
-          <Logo/>
-          <p>This page has status: Unknown. You can return to main page.</p>
-          <Button content={"Return"} link={"/"}/>
-        </div>
-      </section>
-    </Fragment>
-  )
+
+  const renderErrorBoundary = () => {
+    const data = () => {
+      return (
+        <Fragment>
+          <title>TrafficBox - Error</title>
+          <section className={styles.ErrorStructure}>
+            <div className={styles.ErrorBox}>
+              <Logo/>
+              <p>This page has status: Unknown. You can return to main page.</p>
+              <Button content={"Return"} link={"/"}/>
+            </div>
+          </section>
+        </Fragment>
+      )
+    }
+    return data();
+  }
+
+  return renderErrorBoundary();
 }

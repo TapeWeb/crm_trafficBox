@@ -1,25 +1,105 @@
+@use "../variables.scss" as *;
+
 .MyOffersStructure {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100vh;
+  background: $bg-color;
+  padding: 1rem;
+
   .MyOffersBox {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 1rem;
-    background: #303030;
-    gap: 1rem;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background: $box-bg;
+    border-radius: 1rem;
+    box-shadow: 0 0.8vh 2vh $shadow-color;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 20vh;
+    animation: fadeIn 0.5s ease-in-out;
+
+    h1 {
+      font-size: 1.8rem;
+      color: $primary-color;
+    }
+
     .productBox {
       display: flex;
       flex-direction: column;
-      padding: 1rem;
-      background: #404040;
-      color: white;
-      text-align: center;
+      align-items: center;
+      justify-content: center;
+      background: $box-bg;
+      border-radius: 0.8rem;
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 20vh;
+      box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.1);
+      color: $text-color;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
 
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.8vh 2vh rgba(0, 0, 0, 0.15);
+      }
+
+      h1 {
+        font-size: 1.4rem;
+        color: $primary-color;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+        color: $text-color;
+        margin: 0.2rem 0;
+      }
+
+      button {
+        margin-top: 1rem;
+      }
     }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(2vh);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: $tablet-width) {
+  .MyOffersBox {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .productBox {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: $phone-width) {
+  .MyOffersBox {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .productBox h1 {
+    font-size: 1.2rem;
+  }
+
+  .productBox p {
+    font-size: 0.9rem;
   }
 }

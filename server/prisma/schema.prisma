@@ -8,15 +8,16 @@ datasource db {
 }
 
 model users {
-  uid        Int      @id @default(autoincrement())
-  utoken     String   @db.VarChar(255)
-  uname      String   @db.VarChar(64)
-  usurname   String   @db.VarChar(64)
-  upassword  String   @db.VarChar(255)
-  ugender    String   @db.VarChar(32)
-  uemail     String   @unique @db.VarChar(255)
-  uage       Int
-  urole      String   @default("User") @db.VarChar(64)
+  id         Int      @id @default(autoincrement())
+  token      String   @db.VarChar(255)
+  name       String   @db.VarChar(64)
+  surname    String   @db.VarChar(64)
+  password   String   @db.VarChar(255)
+  gender     String   @db.VarChar(32)
+  email      String   @unique @db.VarChar(255)
+  age        Int
+  role       String   @default("User") @db.VarChar(64)
+  balance    Int      @default(0)
   created_at DateTime @default(now()) @db.Timestamp(0)
   updated_at DateTime @updatedAt @db.Timestamp(0)
 
@@ -24,13 +25,13 @@ model users {
 }
 
 model offers {
-  oid        Int      @id @default(autoincrement())
-  ouid       Int
-  oname      String   @db.VarChar(64)
-  odescribe  String?  @db.VarChar(64)
-  oprice     Int
-  ovalues    Int
-  created_at DateTime @default(now()) @db.Timestamp(0)
+  id          Int      @id @default(autoincrement())
+  uid         Int
+  name        String   @db.VarChar(64)
+  description String?  @db.VarChar(64)
+  price       Int
+  value       Int
+  created_at  DateTime @default(now()) @db.Timestamp(0)
 
-  users users @relation(fields: [ouid], references: [uid], onDelete: Cascade)
+  users users @relation(fields: [uid], references: [id], onDelete: Cascade)
 }

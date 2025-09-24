@@ -1,0 +1,21 @@
+@use '../variables.scss' as *;
+
+.AdvertiseBarStructure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  background: $box-bg;
+  border-radius: 1rem;
+  box-shadow: 0 0.4vh 1.2vh $shadow-color;
+  transition: all 0.3s ease;
+  max-width: 100%;
+  width: 60%;
+  margin: 1rem auto;
+  &:hover {
+    transform: scaleX(1.1);
+    box-shadow: 0 0.4vh 1.2vh $shadow-color;
+  }
+}

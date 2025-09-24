@@ -5,6 +5,7 @@ export interface CreateUserData {
   password: string;
   gender: string;
   age: number;
+  balance: number;
 }
 
 export interface CheckUserData {

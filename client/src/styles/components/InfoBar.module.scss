@@ -1,14 +1,61 @@
+@use "../variables.scss" as *;
+
 .infoBarSection {
   display: flex;
-  flex-direction: row;
-  padding: 3.3vh 1vh;
-  background: #181818;
+  padding: 1rem 1rem;
+  background: $box-bg;
+  border-radius: 1rem;
+  gap: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 100%;
+  width: 52%;
+  margin: 1rem auto;
+  &:hover {
+    transform: scaleX(1.1);
+    box-shadow: 0 0.4vh 1.2vh $shadow-color;
+  }
+
   .mainDevelopersBox {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
-    background: #303030;
-    border-radius: 0.5rem;
     gap: 1rem;
+    padding: 1rem 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.8vh 2vh $shadow-color;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0.5rem 1.25rem $shadow-color;
+    }
+
+    h1 {
+      font-size: 1rem;
+      color: $text-color;
+      font-weight: 600;
+
+      Button {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: $tablet-width) {
+  .mainDevelopersBox {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: $phone-width) {
+  .mainDevelopersBox {
+    padding: 1rem;
+    h1 { font-size: 0.9rem; }
   }
 }

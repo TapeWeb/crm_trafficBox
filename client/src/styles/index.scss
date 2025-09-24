@@ -4,18 +4,65 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-weight: 600;
-  font-family: 'Ubuntu Mono', sans-serif;
+  font-weight: 500;
+  font-family: 'Roboto', monospace, sans-serif;
+  line-height: 1.5;
 }
 
-body {
+html, body {
+  width: 100%;
+  height: 100%;
   background: #121212;
-}
-
-body::selection {
-  background: $primary-color;
-}
-
-h1, h2, h3, h4, h5, h6, p, button, a {
   color: #fff;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: $primary-color;
+  color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+p, a, button {
+  color: $button-color-text;
+  transition: color 0.3s ease, background 0.3s ease;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: $primary-color;
+  color: #fff;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: $primary-color-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba($primary-color, 0.4);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
 }
