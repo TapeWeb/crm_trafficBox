@@ -1,16 +1,16 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-function getEnvVar(key: string, defaultValue?: string): string {
+const getEnvVar = (key: string, defaultValue?: string): string => {
   const value = process.env[key] ?? defaultValue;
   if (value === undefined) {
     throw new Error(`❌ Missing environment variable: ${key}`);
   }
   return value;
-}
+};
 
 export const ENV = {
-  // PostgreSQL
+  // PostgresSQL
   POSTGRES_HOST: getEnvVar("POSTGRES_HOST"),
   POSTGRES_PORT: getEnvVar("POSTGRES_PORT"),
   POSTGRES_USER: getEnvVar("POSTGRES_USER"),
@@ -19,17 +19,17 @@ export const ENV = {
   DATABASE_URL: getEnvVar("DATABASE_URL"),
 
   // PGAdmin
-  PGADMIN_DEFAULT_EMAIL: getEnvVar("PGADMIN_DEFAULT_EMAIL"),
-  PGADMIN_DEFAULT_PASSWORD: getEnvVar("PGADMIN_DEFAULT_PASSWORD"),
+  PGADMIN_EMAIL: getEnvVar("PGADMIN_EMAIL"),
+  PGADMIN_PASSWORD: getEnvVar("PGADMIN_PASSWORD"),
   PGADMIN_PORT: getEnvVar("PGADMIN_PORT"),
 
   // Server
-  VITE_SERVER_PORT: getEnvVar("SERVER_PORT"),
-  VITE_SERVER_API_URL: getEnvVar("SERVER_API_URL"),
+  VITE_SERVER_PORT: getEnvVar("VITE_SERVER_PORT"),
+  VITE_SERVER_API_URL: getEnvVar("VITE_SERVER_API_URL"),
 
   // Client
-  VITE_CLIENT_PORT: getEnvVar("CLIENT_PORT"),
-  VITE_CLIENT_API_URL: getEnvVar("CLIENT_API_URL"),
+  VITE_CLIENT_PORT: getEnvVar("VITE_CLIENT_PORT"),
+  VITE_CLIENT_API_URL: getEnvVar("VITE_CLIENT_API_URL"),
 
   // Docker
   DOCKER_MODE: getEnvVar("DOCKER_MODE"),

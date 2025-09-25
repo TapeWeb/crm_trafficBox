@@ -7,7 +7,12 @@ export function Logo() {
         return (
         <Fragment>
           <div className={styles.logo}>
-            <span className={styles.traffic}>Traffic</span><span className={styles.box}>Box</span>
+            <span className={styles.traffic}>
+              Fine
+            </span>
+            <span className={styles.box}>
+              DB
+            </span>
           </div>
         </Fragment>
       );
