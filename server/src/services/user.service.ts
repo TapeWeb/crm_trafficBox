@@ -2,10 +2,10 @@ import { prisma } from "../config/database";
 import { generateToken } from "../utils/generateToken.utils.ts";
 import { hashPassword } from "../utils/hashPassword.utils.ts";
 import { checkData } from "../utils/checkData.utils.ts";
-import { CreateUserData, CheckUserData } from "../types/user.types.ts";
+import {CheckAuthData, CreateUserData, RolesType, validRoles} from "../types/user.types.ts";
 
 export const createUser = async (data: CreateUserData) => {
-  const { name, surname, email, password, gender, age } = data;
+  const { name, surname, email, password, gender, age, role } = data;
 
   if (!password) throw new Error("Password is required");
   if (age < 16) throw new Error("User must be at least 16 years old");
@@ -24,7 +24,7 @@ export const createUser = async (data: CreateUserData) => {
       password: hashedPassword,
       gender,
       age,
-      role: "User",
+      role,
       balance: 0,
       token: tokenGenerate,
     },
@@ -33,7 +33,7 @@ export const createUser = async (data: CreateUserData) => {
   return { token: user.token, message: "User successfully created" };
 };
 
-export const checkUser = async (data: CheckUserData) => {
+export const checkUser = async (data: CheckAuthData) => {
   const { email, password } = data;
 
   if (!password) throw new Error("Password is required");
@@ -52,7 +52,7 @@ export const getCurrentUser = async (token: string) => {
   if (!user) throw new Error("User not found");
 
   return {
-    uid: user.id,
+    id: user.id,
     name: user.name,
     surname: user.surname,
     email: user.email,
@@ -78,7 +78,21 @@ export const getAllUsers = async () => {
     }
   });
 
-  return users as any;
+  return users as object;
+};
+
+export const getUserRole = async (token: string): Promise<RolesType> => {
+  const user = await getCurrentUser(token);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  if (Object.values(validRoles).includes(user.role as RolesType)) {
+    return user.role as RolesType;
+  }
+
+  throw new Error("Invalid user role");
 };
 
 export const removeUser = async (data: { id: number }) => {
@@ -87,6 +101,10 @@ export const removeUser = async (data: { id: number }) => {
   const user = await prisma.users.findUnique({ where: { id } });
   if (!user) throw new Error("User not found");
 
-  await prisma.users.delete({ where: { id } });
-  return { message: "User deleted" };
+  await prisma.users.delete({ where: { id } }).then((result) => {
+    if (result.id) {
+      return { message: "User successfully removed" };
+    }
+    return { message: "User not found" };
+  });
 };

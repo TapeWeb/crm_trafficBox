@@ -3,21 +3,25 @@
 .OffersStructure {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+  padding: 2rem 1rem;
   background: $bg-color;
   .offerBox {
     display: flex;
     flex-direction: column;
-    padding: 1vh 1vw;
+    padding: 2rem;
     background: $box-bg;
     color: $text-color;
     border-radius: 1vh;
     gap: 1rem;
+    width: 100%;
+    max-width: 80vh;
+    height: auto;
     .productBox {
       display: flex;
       flex-direction: column;
+      flex-wrap: wrap;
+      align-content: baseline;
       padding: 1vh 1vw;
       border-radius: 1vh;
       background: $box-bg;
@@ -26,7 +30,7 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
 
       &:hover {
-        transform: translateY(-5px);
+        transform: translate(-0.5vh);
         box-shadow: 0 0.8vh 2rem rgba(0, 0, 0, 0.15);
       }
     }

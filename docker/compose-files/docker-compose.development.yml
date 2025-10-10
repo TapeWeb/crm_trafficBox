@@ -47,7 +47,7 @@ services:
       - ../../server:/server
       - /server/node_modules
     ports:
-      - "${VITE_SERVER_PORT}:${VITE_SERVER_PORT}"
+      - "0.0.0.0:${VITE_SERVER_PORT}:${VITE_SERVER_PORT}"
     networks:
       - ${NETWORK_NAME}
     depends_on:
@@ -65,10 +65,18 @@ services:
       - ../../client:/client
       - /client/node_modules
     ports:
-      - "${VITE_CLIENT_PORT}:${VITE_CLIENT_PORT}"
+      - "0.0.0.0:${VITE_CLIENT_PORT}:${VITE_CLIENT_PORT}"
+    stdin_open: true
+    tty: true
+    networks:
+      - ${NETWORK_NAME}
     env_file:
       - ../../.env
+    environment:
+      - DOCKER_HOST=true
+    depends_on:
+      - ${CONTAINER_NAME_SERVER}
 
 networks:
   app_network:
-    driver: bridge
+    external: true

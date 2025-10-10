@@ -1,0 +1,69 @@
+@use '../../variables' as *;
+
+.ProfileBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background: $box-bg;
+  border-radius: 1vh;
+  box-shadow: 0 0 2vh $shadow-color;
+  width: 50%;
+  margin: 0 auto;
+  gap: 1.5rem;
+
+  .Avatar {
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+    }
+  }
+
+  .WelcomeProfile {
+    font-size: 1.8rem;
+    text-align: center;
+    color: $text-color;
+    margin-top: 0.5rem;
+  }
+
+  .DataBox {
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    background: $box-bg;
+    border-radius: 1vh;
+    box-shadow: 0 0 2vh $shadow-color;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    font-size: 1.1rem;
+    color: $text-color;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+
+    li {
+      list-style: none;
+
+      strong {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  .OthersButtonsBox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 1rem;
+  }
+}

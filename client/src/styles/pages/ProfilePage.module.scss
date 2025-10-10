@@ -1,55 +1,21 @@
 @use '../variables' as *;
 
-.myProfileStructure {
+.ProfileStructure {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: space-between;
   height: 100vh;
+  width: 100vw;
   background: $bg-color;
-  .profileBox {
+  .ContentBox {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 3rem;
+    flex-direction: row;
+    padding: 1vh 1vw;
     background: $box-bg;
-    box-shadow: 0 0 2vh $shadow-color;
-    border-radius: 1rem;
+    color: $text-color;
+    border-radius: 1vh;
     gap: 1rem;
-    h1 {
-      color: $text-color;
-    }
-    .dataBox {
-      display: flex;
-      flex-direction: column;
-      padding: 1rem 2rem;
-      background: $box-bg;
-      box-shadow: 0 0 2vh $shadow-color;
-      margin-top: 1rem;
-      border-radius: 1rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 0.8vh 2vh rgba(0, 0, 0, 0.15);
-      }
-    }
-    .buttonsBox {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-    }
-    h1, p {
-      display: flex;
-      flex-direction: row;
-      gap: 1rem;
-      font-weight: 400;
-      color: $text-color;
-    }
-
+    width: 100%;
+    height: 100%;
   }
 }

@@ -8,10 +8,10 @@ export function Logo() {
         <Fragment>
           <div className={styles.logo}>
             <span className={styles.traffic}>
-              Fine
+              Brain
             </span>
             <span className={styles.box}>
-              DB
+              Axis
             </span>
           </div>
         </Fragment>

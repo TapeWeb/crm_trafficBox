@@ -1,0 +1,61 @@
+@use '../../variables' as *;
+
+.DashboardStructure {
+  display: flex;
+  flex-direction: column;
+  h1 {
+    text-align: center;
+  }
+  .DashboardContent {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    padding: 1rem 1rem;
+    background: $box-bg;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 2vh $shadow-color;
+    gap: 1rem;
+    width: 15%;
+  }
+  .TotalClients {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1rem;
+    background: $box-bg;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 2vh $shadow-color;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    &:hover {
+      transform: translateY(-0.5vh);
+      box-shadow: 0 0.5rem 1.25rem $shadow-color;
+    }
+  }
+  .TotalAdmins {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1rem;
+    background: $box-bg;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 2vh $shadow-color;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    &:hover {
+      transform: translateY(-0.5vh);
+      box-shadow: 0 0.5rem 1.25rem $shadow-color;
+    }
+  }
+
+  .ConversionBox {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1rem;
+    background: $box-bg;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 2vh $shadow-color;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    &:hover {
+      transform: translateY(-0.5vh);
+      box-shadow: 0 0.5rem 1.25rem $shadow-color;
+    }
+  }
+}

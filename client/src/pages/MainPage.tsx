@@ -2,9 +2,7 @@ import { Fragment } from "react";
 import { NavBar } from "../components/NavBar.tsx";
 import styles from "../styles/pages/MainPage.module.scss";
 import { InfoBar } from "../components/InfoBar.tsx";
-import { AdvertisementBar } from "../components/AdvertisementBar.tsx";
-import AdvertisementContent from "../data/advertisementContent.data.json";
-
+import {Dashboard} from "../components/MainPage/Dashboard.tsx";
 export const MainPage = () => {
 
   const renderMainPage = () => {
@@ -14,14 +12,7 @@ export const MainPage = () => {
         <section className={styles.MainStructure}>
           <NavBar />
           <main>
-            <AdvertisementBar />
-            <div className={styles.adsContainer}>
-              {AdvertisementContent.map((content: any, index: number) => (
-                <div key={index} className={styles.containerConstruct}>
-                  <h1>{content.content}</h1>
-                </div>
-              ))}
-            </div>
+            <Dashboard />
           </main>
           <InfoBar />
         </section>

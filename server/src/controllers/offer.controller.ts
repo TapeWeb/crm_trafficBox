@@ -34,7 +34,8 @@ export const getMyOffers = async (req: Request, res: Response) => {
 
 export const deleteOffer = async (req: Request, res: Response) => {
   try {
-    const id = req.query.id as string | undefined;
+    const { id } = req.params;
+    console.log("id:", id);
     if (!id) return res.status(400).json({ message: "Offer ID is required" });
 
     await offerService.deleteOffer(Number(id));

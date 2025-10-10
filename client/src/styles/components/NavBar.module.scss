@@ -7,17 +7,8 @@
   align-items: center;
   padding: 1rem 1rem;
   background: $box-bg;
-  border-radius: 1rem;
-  box-shadow: 0 0.4vh 1.2vh $shadow-color;
-  animation: fadeIn 0.5s ease-in-out;
-  transition: all 0.3s ease;
-  width: 52%;
+  width: 100%;
   max-width: 100%;
-  margin: 1rem auto;
-
-  &:hover {
-    transform: scaleX(1.1);
-  }
 
   .navigationVerifyBox {
     display: flex;
@@ -55,11 +46,6 @@
       }
     }
   }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: $tablet-width) {

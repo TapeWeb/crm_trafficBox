@@ -9,11 +9,11 @@ export function InfoBar() {
         <div className={styles.mainDevelopersBox}>
           <h1>
             Main Developer:{" "}
-            <Button content="Tape" link="https://github.com/TapeWeb" isAnimated />
+            <Button content="Tape" link="https://github.com/TapeWeb" isAnimated={true} size={"small"} />
           </h1>
           <h1>
             Project Idea:{" "}
-            <Button content="NS13" link="https://github.com/nness13" isAnimated />
+            <Button content="NS13" link="https://github.com/nness13" isAnimated={true} size={"small"}/>
           </h1>
         </div>
       </section>

@@ -12,7 +12,7 @@ export const createOffer = async (data: CreateOfferData) => {
 
   return prisma.offers.create({
     data: {
-      uid: user.uid,
+      uid: user.id,
       name: name,
       description: description,
       price: price,

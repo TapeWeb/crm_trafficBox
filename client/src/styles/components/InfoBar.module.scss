@@ -4,16 +4,10 @@
   display: flex;
   padding: 1rem 1rem;
   background: $box-bg;
-  border-radius: 1rem;
   gap: 1rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   max-width: 100%;
-  width: 52%;
-  margin: 1rem auto;
-  &:hover {
-    transform: scaleX(1.1);
-    box-shadow: 0 0.4vh 1.2vh $shadow-color;
-  }
+  width: 100%;
 
   .mainDevelopersBox {
     display: flex;

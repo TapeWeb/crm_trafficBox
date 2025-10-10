@@ -7,10 +7,10 @@ import {SignInPage} from "../pages/SignInPage.tsx";
 import {ProfilePage} from "../pages/ProfilePage.tsx";
 import {OffersPage} from "../pages/OffersPage.tsx";
 import {CreateOffer} from "../pages/CreateOffer.tsx";
-import {MyOffersPage} from "../pages/MyOffersPage.tsx";
 import {AdminPanel} from "../pages/AdminPanel.tsx";
 import {AdminPanel_Users} from "../components/AdminPanel/AdminPanel_Users.tsx";
 import {AdminPanel_Offers} from "../components/AdminPanel/AdminPanel_Offers.tsx";
+import {Dashboard} from "../components/MainPage/Dashboard.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -18,19 +18,21 @@ export const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorBoundary />,
     children: [
-      { index: true, element: <MainPage /> },
+      { path: "", element: <MainPage />, children: [
+          { path: "dashboard", element: <Dashboard /> }
+        ]
+      },
       { path: "signUp", element: <SignUpPage /> },
       { path: "signIn", element: <SignInPage /> },
       { path: "profile", element: <ProfilePage /> },
       { path: "offers", element: <OffersPage /> },
       { path: "createOffer", element: <CreateOffer /> },
-      { path: "myOffers", element: <MyOffersPage /> },
       {
         path: "adminPanel",
         element: <AdminPanel />,
         children: [
-          { path: "adminPanel_Users", element: <AdminPanel_Users /> },
-          { path: "adminPanel_Offers", element: <AdminPanel_Offers /> }
+          { path: "users", element: <AdminPanel_Users /> },
+          { path: "offers", element: <AdminPanel_Offers /> }
         ]
       }
     ]

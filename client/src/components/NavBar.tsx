@@ -32,10 +32,10 @@ export const NavBar = observer(() => {
             <p>Loading...</p>
           ) : TokenStore.token ? (
             <div className={styles.navigationVerifyBox}>
-              <h1>Name: {UserStore.name}</h1>
-              <Button content={"Profile"} link={"/profile"} />
+              <h1>Full name: {UserStore.name} {UserStore.surname}</h1>
+              <Button content={"Profile"} link={"/profile"} size={"small"}/>
               {adminRoles.includes(UserStore.role) && (
-                <Button content={"Admin"} link={"/adminPanel"} />
+                <Button content={"Admin"} link={"/adminPanel"} size={"small"}/>
               )}
             </div>
           ) : (

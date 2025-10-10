@@ -1,0 +1,63 @@
+@use '../../variables' as *;
+
+.OffersProfile {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: $box-bg;
+  border-radius: 1vh;
+  box-shadow: 0 0 2vh $shadow-color;
+  width: 50%;
+  height: 100%;
+  .WelcomeOffers {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  .OffersBox {
+    display: -webkit-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: space-between;
+    align-content: baseline;
+    background: $box-bg;
+    border-radius: 1vh;
+    box-shadow: 0 0 2vh $shadow-color;
+    max-width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: scale(1.02);
+      transition: transform 0.3s ease;
+    }
+    h1 {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+    .ProductBox {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      background: $box-bg;
+      border-radius: 1vh;
+      box-shadow: 0 0 2vh $shadow-color;
+      transition: transform 0.3s ease;
+      width: 30%;
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+  }
+  .OthersButtonsBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 1vh;
+  }
+}

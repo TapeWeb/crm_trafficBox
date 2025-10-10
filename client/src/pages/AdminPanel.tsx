@@ -26,8 +26,8 @@ export const AdminPanel = observer(() => {
                 <div className={styles.SideBar}>
                   <div className={styles.ContentBar}>
                     <h1>Admin Panel</h1>
-                    <Button content={"Users"} link={"adminPanel_Users"}/>
-                    <Button content={"Offers"} link={"adminPanel_Offers"}/>
+                    <Button content={"Users"} link={"users"}/>
+                    <Button content={"Offers"} link={"offers"}/>
                   </div>
                 </div>
                 <Outlet/>

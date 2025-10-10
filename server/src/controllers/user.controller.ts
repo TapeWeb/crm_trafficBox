@@ -1,10 +1,21 @@
 import  { Request, Response } from "express";
 import * as userService from "../services/user.service";
+import {UserData, validRoles} from "../types/user.types.ts";
 
 export const createUser = async (req: Request, res: Response) => {
   try {
     const { name, surname, email, password, gender, age } = req.body;
-    const result = await userService.createUser({ name, surname, email, password, gender, age, balance: 0 });
+    const result = await userService.createUser({
+      name,
+      surname,
+      email,
+      password,
+      gender,
+      age,
+      balance: 0,
+      role: validRoles[1],
+    });
+
     res.status(201).json(result);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
@@ -38,8 +49,9 @@ export const getCurrentUser = async (req: Request, res: Response) => {
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const users = await userService.getAllUsers();
-    const mappedUsers = users.map((user: any) => ({
+    const users = await userService.getAllUsers() as UserData[];
+
+    const mappedUsers = users.map(user => ({
       id: user.id,
       name: user.name,
       surname: user.surname,
@@ -53,6 +65,18 @@ export const getAllUsers = async (req: Request, res: Response) => {
     res.json(mappedUsers);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
+  }
+};
+
+export const getUserRole = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.query as { token?: string };
+    if (!token) return res.status(400).json({ error: "Token is required" });
+
+    const user = await userService.getUserRole(token) as unknown as UserData;
+    res.json({ role: user.role });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
   }
 };
 

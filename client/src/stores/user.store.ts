@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, action } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import Swal from "sweetalert2";
 import TokenStore from "./token.store.ts";
 
@@ -13,6 +13,7 @@ export interface IUser {
   gender: Gender;
   role: string;
   balance: number;
+  avatarUrl?: string;
 }
 
 class UserStore {
@@ -25,17 +26,14 @@ class UserStore {
   gender: Gender = "Male";
   role: string = "User";
   balance: number = 0;
+  avatarUrl: string = "";
 
   users: IUser[] = [];
   loading: boolean = false;
   error: string | null = null;
 
   constructor() {
-    makeAutoObservable(this, {
-      changeData: action,
-      removeAllData: action,
-      fetchUsers: action.bound,
-    });
+    makeAutoObservable(this);
   }
 
   changeData = <K extends keyof UserStore>(field: K, value: UserStore[K]) => {
@@ -69,12 +67,7 @@ class UserStore {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (!res.ok) return Swal.fire({
-        icon: 'error',
-        title: 'Failed to load users!',
-        showConfirmButton: false,
-        timer: 1500
-      });
+      if (!res.ok) return console.error(await res.text());
 
       const result: IUser[] = await res.json();
 
@@ -107,7 +100,7 @@ class UserStore {
 
   removeUser = async (user: any) => {
     try {
-      if (user.role === "Admin") return Swal.fire({
+      if (user.role === "Admin") return await Swal.fire({
         icon: 'error',
         title: 'Admin cannot be removed!',
         showConfirmButton: false,
@@ -118,7 +111,7 @@ class UserStore {
         method: "DELETE",
       });
 
-      if (!response.ok) return Swal.fire({
+      if (!response.ok) return await Swal.fire({
         icon: 'error',
         title: 'Failed to remove user!',
         showConfirmButton: false,
@@ -167,7 +160,7 @@ class UserStore {
           role: this.role,
         })
       });
-      if (!res.ok) throw new Error(await res.text());
+      if (!res.ok) return console.error(await res.text());
       const data = await res.json();
       await Swal.fire({
         icon: 'success',
@@ -198,12 +191,13 @@ class UserStore {
 
   checkUser = async () => {
     if (!this.email?.trim() || !this.password?.trim()) {
-      return Swal.fire({
+      Swal.fire({
         icon: "warning",
         title: "Please fill in all fields.",
         showConfirmButton: false,
         timer: 1500,
       });
+      return false;
     }
 
     try {

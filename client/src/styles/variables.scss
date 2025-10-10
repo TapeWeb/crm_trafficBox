@@ -1,8 +1,8 @@
 @use 'sass:color';
 
-$phone-width: 425px;
-$tablet-width: 768px;
-$laptop-width: 992px;
+$phone-width: 26.5625em;
+$tablet-width: 48em;
+$laptop-width: 62em;
 
 $primary-color: #ff0000;
 $secondary-color: #0099dd;
@@ -12,3 +12,4 @@ $text-color: #333;
 $button-color-text: #fff;
 $box-bg: #fff;
 $shadow-color: rgba(0, 0, 0, 0.08);
+$accent-color: #ff6600;

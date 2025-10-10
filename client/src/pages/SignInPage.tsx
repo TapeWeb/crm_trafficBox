@@ -11,19 +11,17 @@ export const SignInPage = observer(() => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkAuth = async () => {
+    (async () => {
       const user = await TokenStore.getUserByToken();
       if (user) {
-        await Swal.fire({
+        Swal.fire({
           icon: "error",
           title: "You are already authorized!",
           showConfirmButton: false,
           timer: 1500,
-        });
-        navigate("/");
+        }).then(() => navigate("/"));
       }
-    };
-    checkAuth().then();
+    })();
   }, [navigate]);
 
   return (
@@ -31,36 +29,42 @@ export const SignInPage = observer(() => {
       <title>TrafficBox - Sign In</title>
       <section className={styles.SignInStructure}>
         <div className={styles.SignInBox}>
-          <h1>Sign In</h1>
-          <div className={styles.inputsBox}>
-            <label>
-              Email
-              <input
-                type="email"
-                value={UserStore.email}
-                onChange={(e) => UserStore.changeData("email", e.target.value)}
-              />
-            </label>
-            <label>
-              Password
-              <input
-                type="password"
-                value={UserStore.password}
-                onChange={(e) => UserStore.changeData("password", e.target.value)}
-              />
-            </label>
+          <div className={styles.SignInBoxStructure}>
+            <h1>Sign In Page</h1>
+            <div className={styles.SignInMainPart}>
+              <div className={styles.SignInInputPart}>
+                <input type={"text"} placeholder={"Email"} value={UserStore.email} onChange={(e) => UserStore.changeData("email", e.target.value)}/>
+                <input type={"text"} placeholder={"Password"} value={UserStore.password} onChange={(e) => UserStore.changeData("password", e.target.value)}/>
+              </div>
+              <div className={styles.SignInButtonsPart}>
+                <Button
+                  content={"Login"}
+                  size={"small"}
+                  onClick={async () => {
+                    const success = await UserStore.checkUser();
+                    if (success) {
+                      await Swal.fire({
+                        icon: "success",
+                        title: "Welcome back!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                      });
+                      navigate("/");
+                    } else {
+                      await Swal.fire({
+                        icon: "error",
+                        title: "Invalid email or password",
+                        showConfirmButton: false,
+                        timer: 1500,
+                      });
+                    }
+                  }}
+                />
+              </div>
+            </div>
           </div>
-          <div className={styles.containerButtonBox}>
-            <Button content="Sign In" onClick={() => UserStore.checkUser().then(
-              () => TokenStore.getToken().then(
-                () => navigate("/")
-              )
-            )} />
-            <Button content="Return" link="/" />
-          </div>
-          <div className={styles.registrationBox}>
-            <h4>You don't have an account?</h4>
-            <Button content="Sign Up" link="/signUp" />
+          <div className={styles.SignInSidePart}>
+            <Button content={"Sign Up"} link={"/signUp"} size={"small"} variant={"primary"}/>
           </div>
         </div>
       </section>

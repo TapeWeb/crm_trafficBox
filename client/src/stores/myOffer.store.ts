@@ -9,9 +9,14 @@ interface Offer {
   value: number;
 }
 
+interface UserData {
+  id: number;
+}
+
 class MyOffersStore {
   offers: Offer[] = [];
   loading = false;
+  error: string | null = null;
   uID: number | null = null;
 
   constructor() {
@@ -22,26 +27,37 @@ class MyOffersStore {
     this.loading = loading;
   }
 
-  fetchMyOffers = async (token?: string) => {
+  setError(error: string | null) {
+    this.error = error;
+  }
+
+  async fetchUserId(token: string): Promise<number> {
+    const resUser = await fetch(
+      `${import.meta.env.VITE_SERVER_API_URL}/getCurrentUser?token=${encodeURIComponent(token)}`,
+      { method: "GET", headers: { "Content-Type": "application/json" } }
+    );
+
+    if (!resUser.ok) {
+      throw new Error(await resUser.text());
+    }
+
+    const userData: UserData = await resUser.json();
+    runInAction(() => {
+      this.uID = userData.id;
+    });
+    return userData.id;
+  }
+
+  async fetchMyOffers(token?: string): Promise<void> {
     this.setLoading(true);
+    this.setError(null);
+
     try {
       if (!this.uID) {
         if (!token) {
-          console.error("No token provided, cannot fetch user.");
-          return;
+          throw new Error("No token provided, cannot fetch user.");
         }
-
-        const resUser = await fetch(
-          `${import.meta.env.VITE_SERVER_API_URL}/getCurrentUser?token=${encodeURIComponent(token)}`,
-          { method: "GET", headers: { "Content-Type": "application/json" } }
-        );
-
-        if (!resUser.ok) throw new Error(await resUser.text());
-
-        const userData = await resUser.json();
-        runInAction(() => {
-          this.uID = userData.id;
-        });
+        await this.fetchUserId(token);
       }
 
       const resOffers = await fetch(
@@ -49,7 +65,9 @@ class MyOffersStore {
         { method: "GET", headers: { "Content-Type": "application/json" } }
       );
 
-      if (!resOffers.ok) throw new Error(await resOffers.text());
+      if (!resOffers.ok) {
+        throw new Error(await resOffers.text());
+      }
 
       const offers = await resOffers.json();
       runInAction(() => {
@@ -65,33 +83,46 @@ class MyOffersStore {
           : [];
       });
     } catch (err) {
+      runInAction(() => {
+        this.offers = [];
+        this.setError(err instanceof Error ? err.message : "Unknown error");
+      });
       console.error("Error fetching offers:", err);
-      runInAction(() => (this.offers = []));
     } finally {
       this.setLoading(false);
     }
-  };
+  }
 
-
-  deleteOffer = async (offerId: number) => {
+  async deleteOffer(offerId: number): Promise<boolean> {
     this.setLoading(true);
+    this.setError(null);
+
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_SERVER_API_URL}/deleteOffer?id=${offerId}`,
+        `${import.meta.env.VITE_SERVER_API_URL}/deleteOffer/${offerId}`,
         { method: "DELETE", headers: { "Content-Type": "application/json" } }
       );
 
-      if (!res.ok) console.error(await res.text());
+      if (!res.ok) {
+        const errorText = await res.text();
+        this.setError(errorText);
+        console.error(errorText);
+        return false;
+      }
 
       runInAction(() => {
         this.offers = this.offers.filter((offer) => offer.id !== offerId);
       });
+
+      return true;
     } catch (err) {
+      this.setError(err instanceof Error ? err.message : "Unknown error");
       console.error("Error deleting offer:", err);
+      return false;
     } finally {
       this.setLoading(false);
     }
-  };
+  }
 }
 
 export default new MyOffersStore();
