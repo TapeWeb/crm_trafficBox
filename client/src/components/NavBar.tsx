@@ -23,31 +23,27 @@ export const NavBar = observer(() => {
 
   const adminRoles = ["Admin", "Developer"];
 
-  const renderNavBar = () => {
-    return (
-      <Fragment>
-        <section className={styles.navBarSection}>
-          <Logo />
-          {UserStore.loading ? (
-            <p>Loading...</p>
-          ) : TokenStore.token ? (
-            <div className={styles.navigationVerifyBox}>
-              <h1>Full name: {UserStore.name} {UserStore.surname}</h1>
-              <Button content={"Profile"} link={"/profile"} size={"small"}/>
-              {adminRoles.includes(UserStore.role) && (
-                <Button content={"Admin"} link={"/adminPanel"} size={"small"}/>
-              )}
-            </div>
-          ) : (
-            <div className={styles.navigationLinkBox}>
-              <Button content={"Sign In"} link={"/signIn"} />
-              <Button content={"Sign Up"} link={"/signUp"} />
-            </div>
-          )}
-        </section>
-      </Fragment>
-    );
-  };
-
-  return renderNavBar();
+  return (
+    <Fragment>
+      <section className={styles.navBarSection}>
+        <Logo />
+        {UserStore.loading ? (
+          <p>Loading...</p>
+        ) : TokenStore.token ? (
+          <div className={styles.navigationVerifyBox}>
+            <h1>Full name: {UserStore.name} {UserStore.surname}</h1>
+            <Button content={"Profile"} link={"/profile"} size={"small"}/>
+            {adminRoles.includes(UserStore.role) && (
+              <Button content={"Admin"} link={"/adminPanel"} size={"small"}/>
+            )}
+          </div>
+        ) : (
+          <div className={styles.navigationLinkBox}>
+            <Button content={"Sign In"} link={"/signIn"} />
+            <Button content={"Sign Up"} link={"/signUp"} />
+          </div>
+        )}
+      </section>
+    </Fragment>
+  );
 });

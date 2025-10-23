@@ -1,11 +1,10 @@
 import app from "./app";
-import { ENV } from "./config/env";
 import { connectDB } from "./config/database";
 
 const startServer = async () => {
   await connectDB();
-  app.listen(ENV.VITE_SERVER_PORT, () => {
-    console.log(`Server started on ${ENV.VITE_SERVER_API_URL}`);
+  app.listen(process.env.VITE_SERVER_PORT, () => {
+    console.log(`Server started on ${process.env.VITE_SERVER_API_URL}`);
   });
 };
 

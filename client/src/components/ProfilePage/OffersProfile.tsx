@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import {Fragment, useEffect} from "react";
 import Swal from "sweetalert2";
 
 import styles from "../../styles/components/ProfilePage/OffersProfile.module.scss";
@@ -61,45 +61,47 @@ export const OffersProfile = observer(() => {
   };
 
   return (
-    <div className={styles.OffersProfile}>
-      <h1 className={styles.WelcomeOffers}>Welcome to your offers</h1>
+    <Fragment>
+      <section className={styles.OffersProfile}>
+        <h1 className={styles.WelcomeOffers}>Welcome to your offers</h1>
 
-      <div className={styles.OffersBox}>
-        {MyOffersStore.error ? (
-          <p className={styles.Error}>Error loading offers: {MyOffersStore.error}</p>
-        ) : MyOffersStore.loading ? (
-          <p>Loading offers...</p>
-        ) : MyOffersStore.offers.length > 0 ? (
-          MyOffersStore.offers.map((offer) => (
-            <div key={offer.id} className={styles.ProductBox}>
-              <h1>Name: {offer.name}</h1>
-              <p>Description: {offer.description}</p>
-              <p>Price: {offer.price}$</p>
-              <p>Values: {offer.value}</p>
+        <div className={styles.OffersBox}>
+          {MyOffersStore.error ? (
+            <p className={styles.Error}>Error loading offers: {MyOffersStore.error}</p>
+          ) : MyOffersStore.loading ? (
+            <p>Loading offers...</p>
+          ) : MyOffersStore.offers.length > 0 ? (
+            MyOffersStore.offers.map((offer) => (
+              <div key={offer.id} className={styles.ProductBox}>
+                <h1>Name: {offer.name}</h1>
+                <p>Description: {offer.description}</p>
+                <p>Price: {offer.price}$</p>
+                <p>Values: {offer.value}</p>
 
-              <Button
-                content="💼 Quick buy"
-                variant="primary"
-                isAnimated={true}
-                size="small"
-                onClick={handleQuickBuy}
-              />
-            </div>
-          ))
-        ) : (
-          <p>No offers available.</p>
-        )}
-      </div>
+                <Button
+                  content="💼 Quick buy"
+                  variant="primary"
+                  isAnimated={true}
+                  size="small"
+                  onClick={handleQuickBuy}
+                />
+              </div>
+            ))
+          ) : (
+            <p>No offers available.</p>
+          )}
+        </div>
 
-      <div className={styles.OthersButtonsBox}>
-        <Button
-          content="Create offer!"
-          link="/createOffer"
-          variant="primary"
-          size="small"
-          isAnimated={true}
-        />
-      </div>
-    </div>
+        <div className={styles.OthersButtonsBox}>
+          <Button
+            content="Create offer!"
+            link="/createOffer"
+            variant="primary"
+            size="small"
+            isAnimated={true}
+          />
+        </div>
+      </section>
+    </Fragment>
   );
 });

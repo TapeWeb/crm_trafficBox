@@ -1,8 +1,7 @@
 import cors from 'cors';
-import { ENV } from '../config/env';
 
 const allowedOrigins = [
-  `${ENV.VITE_CLIENT_API_URL}`,
+  `${process.env.VITE_CLIENT_API_URL}`,
 ];
 
 export const corsMiddleware = cors({

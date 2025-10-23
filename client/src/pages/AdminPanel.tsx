@@ -14,32 +14,26 @@ export const AdminPanel = observer(() => {
     UserStore.fetchUsers().then(() => {});
   }, []);
 
-  const renderAdminPanel = () => {
-    const data = () => {
-      return (
-        <Fragment>
-          <title>TrafficBox - Admin Panel</title>
-          {TokenStore.token ? (
-            <section className={styles.AdminPanelStructure}>
-              <NavBar/>
-              <main>
-                <div className={styles.SideBar}>
-                  <div className={styles.ContentBar}>
-                    <h1>Admin Panel</h1>
-                    <Button content={"Users"} link={"users"}/>
-                    <Button content={"Offers"} link={"offers"}/>
-                  </div>
-                </div>
-                <Outlet/>
-              </main>
-            </section>
-          ) : (
-            <h1>This page is unknown. Please authorize.</h1>
-          )}
-        </Fragment>
-      )
-    }
-    return data();
-  }
-  return renderAdminPanel();
+  return (
+    <Fragment>
+      <title>TrafficBox - Admin Panel</title>
+      {TokenStore.token ? (
+        <section className={styles.AdminPanelStructure}>
+          <NavBar/>
+          <main>
+            <div className={styles.SideBar}>
+              <div className={styles.ContentBar}>
+                <h1>Admin Panel</h1>
+                <Button content={"Users"} link={"users"}/>
+                <Button content={"Offers"} link={"offers"}/>
+              </div>
+            </div>
+            <Outlet/>
+          </main>
+        </section>
+      ) : (
+        <h1>This page is unknown. Please authorize.</h1>
+      )}
+    </Fragment>
+  )
 });

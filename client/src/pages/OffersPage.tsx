@@ -25,61 +25,56 @@ export const OffersPage = observer(() => {
     });
   }, []);
 
-  const renderOffers = () => {
-    const data = () => {
-      return (
-        <Fragment>
-          <title>TrafficBox - Offers</title>
-          <section className={styles.OffersStructure}>
-            <div className={styles.offerBox}>
-              {OffersStore.loading ? (
-                <p>Loading offers...</p>
-              ) : OffersStore.offers.length > 0 ? (
-                OffersStore.offers.map((offer, index) => (
-                  <div key={offer.id ?? index} className={styles.productBox}>
-                    <h1>Name: {offer.name}</h1>
-                    <p>Describe: {offer.description}</p>
-                    <p>Price: {offer.price}$</p>
-                    <p>Values: {offer.value}</p>
-                    <Button
-                      content={"Quick buy"}
-                      onClick={() =>
-                        Swal.fire({
-                          title: "Are you sure?",
-                          text: "You won't be able to revert this!",
-                          icon: "warning",
-                          showCancelButton: true,
-                          confirmButtonColor: "#3085d6",
-                          cancelButtonColor: "#d33",
-                          confirmButtonText: "Yes, buy it!",
-                        }).then((result) => {
-                          if (result.isConfirmed) {
-                            return Swal.fire({
-                              icon: "success",
-                              title: "Your order has been placed!",
-                              showConfirmButton: false,
-                              timer: 1500,
-                            });
-                          }
-                        })
+  return (
+    <Fragment>
+      <title>TrafficBox - Offers</title>
+      <section className={styles.OffersStructure}>
+        <div className={styles.offerBox}>
+          {OffersStore.loading ? (
+            <p>Loading offers...</p>
+          ) : OffersStore.offers.length > 0 ? (
+            OffersStore.offers.map((offer, index) => (
+              <div key={offer.id ?? index} className={styles.productBox}>
+                <h1>Name: {offer.name}</h1>
+                <p>Describe: {offer.description}</p>
+                <p>Price: {offer.price}$</p>
+                <p>Values: {offer.value}</p>
+                <Button
+                  content={"Quick buy"}
+                  onClick={() =>
+                    Swal.fire({
+                      title: "Are you sure?",
+                      text: "You won't be able to revert this!",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Yes, buy it!",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        return Swal.fire({
+                          icon: "success",
+                          title: "Your order has been placed!",
+                          showConfirmButton: false,
+                          timer: 1500,
+                        });
                       }
-                    />
-                  </div>
-                ))
-              ) : (
-                <p>No offers available.</p>
-              )}
-
-              <div className={styles.buttonsBox}>
-                <Button content={"Create offer!"} link={"/createOffer"} />
-                <Button content={"Return"} link={"/"} />
+                    })
+                  }
+                />
               </div>
-            </div>
-          </section>
-        </Fragment>
-      )
-    }
-    return data();
-  }
-  return renderOffers();
+            ))
+          ) : (
+            <p>No offers available.</p>
+          )}
+
+          <div className={styles.buttonsBox}>
+            <Button content={"Create offer!"} link={"/createOffer"} />
+            <Button content={"Return"} link={"/"} />
+          </div>
+        </div>
+      </section>
+    </Fragment>
+  )
+
 });
