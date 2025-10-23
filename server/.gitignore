@@ -1,5 +1,5 @@
 # Node.js
-node_modules/
+node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -8,7 +8,7 @@ package-lock.json
 yarn.lock
 
 # Logs
-logs/
+logs
 *.log
 logs/*.log
 
@@ -28,13 +28,13 @@ temp/
 *.temp
 
 # Build and output directories
-dist/
-build/
-coverage/
+dist
+build
+coverage
 
 # IDEs and editors
-.vscode/
-.idea/
+.vscode
+.idea
 *.sublime-project
 *.sublime-workspace
 
