@@ -15,7 +15,7 @@ export const AdminPanel_Users = observer(() => {
         title: 'Users fetched successfully!',
         showConfirmButton: false,
         timer: 1500
-      })
+      });
     });
   }, []);
 

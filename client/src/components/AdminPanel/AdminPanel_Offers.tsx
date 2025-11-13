@@ -5,7 +5,6 @@ import NotifyStore from "../../stores/notify.store.ts";
 import styles from "../../styles/components/AdminPanel/AdminPanel_Offers.module.scss";
 import {Button} from "../UI/Button.tsx";
 import Swal from "sweetalert2";
-import {toJS} from "mobx";
 
 export const AdminPanel_Offers = observer(() => {
   useEffect(() => {
@@ -17,7 +16,6 @@ export const AdminPanel_Offers = observer(() => {
           showConfirmButton: false,
           timer: 1500
         });
-        return console.log(toJS(OfferStore.offers));
       }
     });
   }, []);
